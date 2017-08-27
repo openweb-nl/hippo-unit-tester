@@ -3,6 +3,8 @@ package nl.openweb.hippo;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,12 +31,15 @@ import org.hippoecm.hst.util.PathUtils;
 import org.hippoecm.repository.util.DateTools;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import nl.openweb.jcr.Importer;
+
 /**
  * @author Ebrahim Aharpour
  * @since 8/20/2017
  */
-public abstract class BaseHippoTest {
+public abstract class AbstractHippoTest {
     protected MockHstResponse response = new MockHstResponse();
+    protected Node rootNode;
     protected MockHstRequest request = new MockHstRequest();
     protected MockHstRequestContext requestContext = new MockHstRequestContext();
     protected ObjectConverter objectConverter;
@@ -46,15 +51,32 @@ public abstract class BaseHippoTest {
 
     public void setup() {
         try {
+            importNodeStructure(getImporter());
             setRequestContextProvider();
             setObjectConverter();
             setQueryManager();
             setResolvedSiteMapItem();
             setMount();
-            requestContext.setSession(getRootNode().getSession());
+            request.setRequestContext(requestContext);
         } catch (Exception e) {
             throw new SetupTeardownException(e);
         }
+    }
+
+    protected abstract Importer getImporter();
+
+    private void importNodeStructure(Importer importer) throws IOException, RepositoryException, JAXBException {
+        String pathToResource = getPathToTestResource();
+        if (pathToResource != null) {
+            if (pathToResource.endsWith(".xml")) {
+                this.rootNode = importer.createNodesFromXml(getResourceAsStream(pathToResource));
+            } else {
+                this.rootNode = importer.createNodesFromJson(getResourceAsStream(pathToResource));
+            }
+        } else {
+            this.rootNode = importer.createNodesFromJson("{}");
+        }
+        requestContext.setSession(this.rootNode.getSession());
     }
 
 
@@ -84,11 +106,11 @@ public abstract class BaseHippoTest {
     }
 
     private void setQueryManager() throws RepositoryException {
-        hstQueryManager = new HstQueryManagerImpl(getRootNode().getSession(), this.objectConverter, DateTools.Resolution.MILLISECOND);
+        hstQueryManager = new HstQueryManagerImpl(this.rootNode.getSession(), this.objectConverter, DateTools.Resolution.MILLISECOND);
         requestContext.setDefaultHstQueryManager(hstQueryManager);
         requestContext.setHstQueryManagerFactory(new HstQueryManagerFactoryImpl());
         HashMap<Session, HstQueryManager> map = new HashMap<>();
-        map.put(getRootNode().getSession(), hstQueryManager);
+        map.put(this.rootNode.getSession(), hstQueryManager);
         requestContext.setNonDefaultHstQueryManagers(map);
     }
 
@@ -101,16 +123,13 @@ public abstract class BaseHippoTest {
         objectConverterFactory.afterPropertiesSet();
         this.objectConverter = objectConverterFactory.getObject();
 
-        this.objectBeanManager = new ObjectBeanManagerImpl(getRootNode().getSession(), objectConverter);
+        this.objectBeanManager = new ObjectBeanManagerImpl(this.rootNode.getSession(), objectConverter);
         this.requestContext.setDefaultObjectBeanManager(objectBeanManager);
         HashMap<Session, ObjectBeanManager> map = new HashMap<>();
-        map.put(getRootNode().getSession(), objectBeanManager);
+        map.put(this.rootNode.getSession(), objectBeanManager);
         this.requestContext.setNonDefaultObjectBeanManagers(map);
 
     }
-
-    protected abstract Node getRootNode();
-
 
     protected InputStream getResourceAsStream(String pathToResource) {
         InputStream result;
