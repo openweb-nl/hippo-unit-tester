@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.hippoecm.hst.configuration.hosting.MatchException;
 import org.hippoecm.hst.configuration.hosting.Mount;
 import org.hippoecm.hst.core.internal.MutableResolvedMount;
 import org.hippoecm.hst.core.request.ResolvedSiteMapItem;
@@ -95,7 +94,7 @@ public class MockResolvedMount implements MutableResolvedMount {
     }
 
     @Override
-    public ResolvedSiteMapItem matchSiteMapItem(String siteMapPathInfo) throws MatchException {
+    public ResolvedSiteMapItem matchSiteMapItem(String siteMapPathInfo) {
         return sitemaps.get(siteMapPathInfo);
     }
 

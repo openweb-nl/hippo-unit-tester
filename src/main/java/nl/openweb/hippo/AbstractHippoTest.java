@@ -134,7 +134,7 @@ public abstract class AbstractHippoTest {
 
     }
 
-    protected InputStream getResourceAsStream(String pathToResource) {
+    private InputStream getResourceAsStream(String pathToResource) {
         InputStream result;
         if (pathToResource.startsWith("/")) {
             result = this.getClass().getClassLoader().getResourceAsStream(PathUtils.normalizePath(pathToResource));

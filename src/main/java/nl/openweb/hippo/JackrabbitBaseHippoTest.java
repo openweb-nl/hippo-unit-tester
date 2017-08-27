@@ -32,6 +32,7 @@ public abstract class JackrabbitBaseHippoTest extends AbstractHippoTest {
         }
     }
 
+    @Override
     public void teardown() {
         super.teardown();
         repository.close();

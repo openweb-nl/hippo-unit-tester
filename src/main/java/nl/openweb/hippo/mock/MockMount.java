@@ -341,6 +341,7 @@ public class MockMount implements ContextualizableMount {
         this.port = port;
     }
 
+    @Override
     public String onlyForContextPath() {
         return onlyForContextPath;
     }
@@ -553,14 +554,14 @@ public class MockMount implements ContextualizableMount {
     }
 
     @Override
-    public void setChannel(Channel channel, Channel previewChannel) throws UnsupportedOperationException {
+    public void setChannel(Channel channel, Channel previewChannel) {
         this.channel = channel;
         this.previewChannel = previewChannel;
     }
 
     @Override
-    public void addMount(MutableMount mount) throws IllegalArgumentException {
-        new UnsupportedOperationException();
+    public void addMount(MutableMount mount) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
