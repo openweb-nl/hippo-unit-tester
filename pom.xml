@@ -48,14 +48,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.sling</groupId>
-      <artifactId>org.apache.sling.testing.jcr-mock</artifactId>
-      <version>1.3.0</version>
-    </dependency>
-
-
-
-    <dependency>
       <groupId>org.onehippo.cms7.hst.dependencies</groupId>
       <artifactId>hst-spring-dependencies</artifactId>
       <scope>provided</scope>
