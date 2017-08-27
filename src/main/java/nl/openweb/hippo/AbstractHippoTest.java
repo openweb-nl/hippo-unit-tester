@@ -31,6 +31,9 @@ import org.hippoecm.hst.util.PathUtils;
 import org.hippoecm.repository.util.DateTools;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import nl.openweb.hippo.exception.SetupTeardownException;
+import nl.openweb.hippo.mock.MockMount;
+import nl.openweb.hippo.mock.MockResolvedMount;
 import nl.openweb.jcr.Importer;
 
 /**

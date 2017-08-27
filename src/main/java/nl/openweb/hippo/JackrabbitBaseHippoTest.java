@@ -3,6 +3,7 @@ package nl.openweb.hippo;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
 
+import nl.openweb.hippo.exception.SetupTeardownException;
 import nl.openweb.jcr.Importer;
 import nl.openweb.jcr.InMemoryJcrRepository;
 

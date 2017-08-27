@@ -1,4 +1,4 @@
-package nl.openweb.hippo;
+package nl.openweb.hippo.mock;
 
 import java.util.*;
 
