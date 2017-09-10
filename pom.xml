@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.onehippo.cms7</groupId>
     <artifactId>hippo-cms7-release</artifactId>
-    <version>10.2.5</version>
+    <version>11.2.1</version>
   </parent>
 
   <groupId>nl.openweb.hippo</groupId>
@@ -38,7 +38,7 @@
     <dependency>
       <groupId>nl.openweb.jcr</groupId>
       <artifactId>jcr-mocking-tool</artifactId>
-      <version>1.1.1</version>
+      <version>1.2.0</version>
     </dependency>
 
     <dependency>
@@ -71,6 +71,38 @@
     <dependency>
       <groupId>org.onehippo.cms7.hst</groupId>
       <artifactId>hst-mock</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.onehippo.cms7.hst</groupId>
+      <artifactId>hst-content-beans</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.onehippo.cms7.hst.dependencies</groupId>
+      <artifactId>hst-spring-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.onehippo.cms7</groupId>
+      <artifactId>hippo-essentials-components-hst</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>2.10.0</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>

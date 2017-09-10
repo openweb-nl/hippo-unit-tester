@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?><sv:node xmlns:sv="http://www.jcp.org/jcr/sv/1.0" sv:name="news">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>hippostd:folder</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+    <sv:value>hippotranslation:translated</sv:value>
+    <sv:value>hippo:harddocument</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:uuid" sv:type="String">
+    <sv:value>aac3f7cb-6a03-4954-ae13-c51cbd1e6c11</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippo:related___pathreference" sv:type="String"/>
+  <sv:property sv:name="hippostd:foldertype" sv:type="String" sv:multiple="true">
+    <sv:value>new-news-page</sv:value>
+    <sv:value>new-news-folder</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippotranslation:id" sv:type="String">
+    <sv:value>b4516d1e-e774-4a95-9261-ab1754e1b3f7</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippotranslation:locale" sv:type="String">
+    <sv:value>nl</sv:value>
+  </sv:property>
+  <sv:node sv:name="hippotranslation:translations">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+      <sv:value>hippotranslation:translations</sv:value>
+    </sv:property>
+  </sv:node>
+  <sv:node sv:name="test-case-1">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+      <sv:value>hippostd:folder</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+      <sv:value>hippotranslation:translated</sv:value>
+      <sv:value>hippo:named</sv:value>
+      <sv:value>hippo:harddocument</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:uuid" sv:type="String">
+      <sv:value>e35ab546-533a-4295-b275-7199e52d3aa6</sv:value>
+    </sv:property>
+    <sv:property sv:name="hippo:name" sv:type="String">
+      <sv:value>test case 1</sv:value>
+    </sv:property>
+    <sv:property sv:name="hippo:related___pathreference" sv:type="String"/>
+    <sv:property sv:name="hippostd:foldertype" sv:type="String" sv:multiple="true">
+      <sv:value>new-news-page</sv:value>
+      <sv:value>new-news-folder</sv:value>
+    </sv:property>
+    <sv:property sv:name="hippotranslation:id" sv:type="String">
+      <sv:value>493c39b1-f142-4fce-9b48-15be318dec88</sv:value>
+    </sv:property>
+    <sv:property sv:name="hippotranslation:locale" sv:type="String">
+      <sv:value>nl</sv:value>
+    </sv:property>
+    <sv:node sv:name="hippotranslation:translations">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>hippotranslation:translations</sv:value>
+      </sv:property>
+    </sv:node>
+    <sv:node sv:name="news1">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>hippo:handle</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+        <sv:value>mix:referenceable</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>3119bd98-9361-4b78-a81b-ad8228bc8bfb</sv:value>
+      </sv:property>
+      <sv:node sv:name="news1">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>ns:NewsPage</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+          <sv:value>mix:referenceable</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:uuid" sv:type="String">
+          <sv:value>3e5fd650-6f1e-41b9-a44a-2ba4775e437b</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:paths" sv:type="String" sv:multiple="true">
+          <sv:value>3e5fd650-6f1e-41b9-a44a-2ba4775e437b</sv:value>
+          <sv:value>3119bd98-9361-4b78-a81b-ad8228bc8bfb</sv:value>
+          <sv:value>e35ab546-533a-4295-b275-7199e52d3aa6</sv:value>
+          <sv:value>62b8dd7a-ccf9-463a-a770-3f445f2edcef</sv:value>
+          <sv:value>c5a41f30-985c-4a3b-8679-e1233d608df8</sv:value>
+          <sv:value>996bcac5-86cf-49b5-a7a3-16a74863e814</sv:value>
+          <sv:value>2c21a29c-a5d1-4e84-aec4-594e5bf93b25</sv:value>
+          <sv:value>fac975b6-9f9a-4b1a-a0bd-c5b982d61912</sv:value>
+          <sv:value>cafebabe-cafe-babe-cafe-babecafebabe</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:availability" sv:type="String" sv:multiple="true">
+          <sv:value>live</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:related___pathreference" sv:type="String">
+          <sv:value>news/test-case-1/news1</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostd:state" sv:type="String">
+          <sv:value>published</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostd:stateSummary" sv:type="String">
+          <sv:value>live</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:createdBy" sv:type="String">
+          <sv:value>admin</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:creationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:15:14.751+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:lastModificationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:19:16.893+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:lastModifiedBy" sv:type="String">
+          <sv:value>admin</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:publicationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:19:19.238+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippotranslation:id" sv:type="String">
+          <sv:value>f0177875-b2d6-4d5f-9da7-ed008e881c7d</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippotranslation:locale" sv:type="String">
+          <sv:value>nl</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:author" sv:type="String">
+          <sv:value>author-one</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:browserTitle" sv:type="String">
+          <sv:value>Pellentesque sapien tellus</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:description" sv:type="String">
+          <sv:value>Pellentesque sapien tellus, commodo luctus orci sed, auctor pretium nulla. Sed metus justo, placerat nec hendrerit elementum</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:genericNewsItem" sv:type="Boolean">
+          <sv:value>true</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:hideFromSearch" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:hideFromSitemap" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:introduction" sv:type="String">
+          <sv:value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque luctus, ipsum eu elementum semper, lectus eros tincidunt ipsum, at commodo sapien justo eu ipsum. Vestibulum et magna finibus, condimentum leo vel, rhoncus nunc.</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:keywords" sv:type="String">
+          <sv:value/>
+        </sv:property>
+        <sv:property sv:name="ns:releaseDate" sv:type="Date">
+          <sv:value>2017-09-10T14:15:00.000+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:share" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:subjecttags" sv:type="String" sv:multiple="true">
+          <sv:value>onderwijs</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:thematags" sv:type="String" sv:multiple="true"/>
+        <sv:property sv:name="ns:title" sv:type="String">
+          <sv:value>Pellentesque sapien tellus, commodo luctus orci sed, auctor pretium nulla. Sed metus justo, placerat nec hendrerit elementum</sv:value>
+        </sv:property>
+        <sv:node sv:name="ns:headerImage">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>hippogallerypicker:imagelink</sv:value>
+          </sv:property>
+          <sv:property sv:name="hippo:docbase" sv:type="String">
+            <sv:value>00e66dd6-aec5-44d6-bada-0534d76d1a9a</sv:value>
+          </sv:property>
+          <sv:property sv:name="hippo:facets" sv:type="String" sv:multiple="true"/>
+          <sv:property sv:name="hippo:modes" sv:type="String" sv:multiple="true"/>
+          <sv:property sv:name="hippo:values" sv:type="String" sv:multiple="true"/>
+        </sv:node>
+      </sv:node>
+    </sv:node>
+    <sv:node sv:name="news2">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>hippo:handle</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+        <sv:value>mix:referenceable</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>23796843-e214-4ab3-bcc3-971e34d6a70f</sv:value>
+      </sv:property>
+      <sv:node sv:name="news2">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>ns:NewsPage</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+          <sv:value>mix:referenceable</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:uuid" sv:type="String">
+          <sv:value>e4da5fd4-ee0d-4d37-beef-f161c8d643a1</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:paths" sv:type="String" sv:multiple="true">
+          <sv:value>e4da5fd4-ee0d-4d37-beef-f161c8d643a1</sv:value>
+          <sv:value>23796843-e214-4ab3-bcc3-971e34d6a70f</sv:value>
+          <sv:value>e35ab546-533a-4295-b275-7199e52d3aa6</sv:value>
+          <sv:value>62b8dd7a-ccf9-463a-a770-3f445f2edcef</sv:value>
+          <sv:value>c5a41f30-985c-4a3b-8679-e1233d608df8</sv:value>
+          <sv:value>996bcac5-86cf-49b5-a7a3-16a74863e814</sv:value>
+          <sv:value>2c21a29c-a5d1-4e84-aec4-594e5bf93b25</sv:value>
+          <sv:value>fac975b6-9f9a-4b1a-a0bd-c5b982d61912</sv:value>
+          <sv:value>cafebabe-cafe-babe-cafe-babecafebabe</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:availability" sv:type="String" sv:multiple="true">
+          <sv:value>live</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:related___pathreference" sv:type="String">
+          <sv:value>news/test-case-1/news2</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostd:state" sv:type="String">
+          <sv:value>published</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostd:stateSummary" sv:type="String">
+          <sv:value>live</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:createdBy" sv:type="String">
+          <sv:value>admin</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:creationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:19:36.807+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:lastModificationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:22:04.757+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:lastModifiedBy" sv:type="String">
+          <sv:value>admin</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:publicationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:22:08.813+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippotranslation:id" sv:type="String">
+          <sv:value>b65644fd-9d33-41a7-ad7d-f4abf2dd30a8</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippotranslation:locale" sv:type="String">
+          <sv:value>nl</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:author" sv:type="String">
+          <sv:value/>
+        </sv:property>
+        <sv:property sv:name="ns:browserTitle" sv:type="String">
+          <sv:value>Ut nec leo vel ex sagittis rhoncus.</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:description" sv:type="String">
+          <sv:value>Ut nec leo vel ex sagittis rhoncus. In ut sem sed odio egestas molestie. Donec vitae egestas velit, non malesuada lectus.</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:genericNewsItem" sv:type="Boolean">
+          <sv:value>true</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:hideFromSearch" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:hideFromSitemap" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:introduction" sv:type="String">
+          <sv:value>Ut nec leo vel ex sagittis rhoncus. In ut sem sed odio egestas molestie. Donec vitae egestas velit, non malesuada lectus. Sed nibh metus, aliquet ac vestibulum ut, dictum vel nunc. Nulla fermentum mollis quam.</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:keywords" sv:type="String">
+          <sv:value/>
+        </sv:property>
+        <sv:property sv:name="ns:releaseDate" sv:type="Date">
+          <sv:value>2017-09-10T14:20:00.000+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:share" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:subjecttags" sv:type="String" sv:multiple="true">
+          <sv:value>actueel</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:thematags" sv:type="String" sv:multiple="true"/>
+        <sv:property sv:name="ns:title" sv:type="String">
+          <sv:value>Ut nec leo vel ex sagittis rhoncus.</sv:value>
+        </sv:property>
+        <sv:node sv:name="ns:headerImage">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>hippogallerypicker:imagelink</sv:value>
+          </sv:property>
+          <sv:property sv:name="hippo:docbase" sv:type="String">
+            <sv:value>e5eafb42-b386-44c5-8090-2b3d0ef3a36e</sv:value>
+          </sv:property>
+          <sv:property sv:name="hippo:facets" sv:type="String" sv:multiple="true"/>
+          <sv:property sv:name="hippo:modes" sv:type="String" sv:multiple="true"/>
+          <sv:property sv:name="hippo:values" sv:type="String" sv:multiple="true"/>
+        </sv:node>
+      </sv:node>
+    </sv:node>
+    <sv:node sv:name="news3">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>hippo:handle</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+        <sv:value>mix:referenceable</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>6e827b9d-a74f-40a7-8446-7789696ed830</sv:value>
+      </sv:property>
+      <sv:node sv:name="news3">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>ns:NewsPage</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+          <sv:value>mix:referenceable</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:uuid" sv:type="String">
+          <sv:value>51468f91-a77f-4d69-82ff-53e2877978a6</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:paths" sv:type="String" sv:multiple="true">
+          <sv:value>51468f91-a77f-4d69-82ff-53e2877978a6</sv:value>
+          <sv:value>6e827b9d-a74f-40a7-8446-7789696ed830</sv:value>
+          <sv:value>e35ab546-533a-4295-b275-7199e52d3aa6</sv:value>
+          <sv:value>62b8dd7a-ccf9-463a-a770-3f445f2edcef</sv:value>
+          <sv:value>c5a41f30-985c-4a3b-8679-e1233d608df8</sv:value>
+          <sv:value>996bcac5-86cf-49b5-a7a3-16a74863e814</sv:value>
+          <sv:value>2c21a29c-a5d1-4e84-aec4-594e5bf93b25</sv:value>
+          <sv:value>fac975b6-9f9a-4b1a-a0bd-c5b982d61912</sv:value>
+          <sv:value>cafebabe-cafe-babe-cafe-babecafebabe</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:availability" sv:type="String" sv:multiple="true">
+          <sv:value>live</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:related___pathreference" sv:type="String">
+          <sv:value>news/test-case-1/news3</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostd:state" sv:type="String">
+          <sv:value>published</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostd:stateSummary" sv:type="String">
+          <sv:value>live</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:createdBy" sv:type="String">
+          <sv:value>admin</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:creationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:23:16.741+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:lastModificationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:24:35.331+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:lastModifiedBy" sv:type="String">
+          <sv:value>admin</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:publicationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:24:38.256+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippotranslation:id" sv:type="String">
+          <sv:value>d7162ac7-08cf-4541-b41d-56d261aadfb2</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippotranslation:locale" sv:type="String">
+          <sv:value>nl</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:author" sv:type="String">
+          <sv:value/>
+        </sv:property>
+        <sv:property sv:name="ns:browserTitle" sv:type="String">
+          <sv:value>Nunc mattis ex metus, scelerisque faucibus ex blandit et</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:description" sv:type="String">
+          <sv:value>Nunc mattis ex metus, scelerisque faucibus ex blandit et. Aenean fringilla, turpis ac semper dignissim. scelerisque faucibus ex blandit et.</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:genericNewsItem" sv:type="Boolean">
+          <sv:value>true</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:hideFromSearch" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:hideFromSitemap" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:introduction" sv:type="String">
+          <sv:value>Nunc mattis ex metus, scelerisque faucibus ex blandit et. Aenean fringilla, turpis ac semper dignissim, arcu felis commodo diam, non congue enim lorem id ligula. Nulla ultricies elit nec massa porta varius.</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:keywords" sv:type="String">
+          <sv:value/>
+        </sv:property>
+        <sv:property sv:name="ns:releaseDate" sv:type="Date">
+          <sv:value>2017-09-10T14:23:00.000+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:share" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:subjecttags" sv:type="String" sv:multiple="true">
+          <sv:value>actueel</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:thematags" sv:type="String" sv:multiple="true"/>
+        <sv:property sv:name="ns:title" sv:type="String">
+          <sv:value>Nunc mattis ex metus, scelerisque faucibus ex blandit et</sv:value>
+        </sv:property>
+        <sv:node sv:name="ns:headerImage">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>hippogallerypicker:imagelink</sv:value>
+          </sv:property>
+          <sv:property sv:name="hippo:docbase" sv:type="String">
+            <sv:value>e5eafb42-b386-44c5-8090-2b3d0ef3a36e</sv:value>
+          </sv:property>
+          <sv:property sv:name="hippo:facets" sv:type="String" sv:multiple="true"/>
+          <sv:property sv:name="hippo:modes" sv:type="String" sv:multiple="true"/>
+          <sv:property sv:name="hippo:values" sv:type="String" sv:multiple="true"/>
+        </sv:node>
+      </sv:node>
+    </sv:node>
+    <sv:node sv:name="another-type">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>hippo:handle</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+        <sv:value>hippo:named</sv:value>
+        <sv:value>mix:referenceable</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>fc0de174-e65f-48bd-a39a-07f0991b23a3</sv:value>
+      </sv:property>
+      <sv:property sv:name="hippo:name" sv:type="String">
+        <sv:value>another type</sv:value>
+      </sv:property>
+      <sv:node sv:name="another-type">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>ns:AnotherType</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+          <sv:value>mix:referenceable</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:uuid" sv:type="String">
+          <sv:value>541ea579-4398-4dc0-8097-cade80b1884b</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:paths" sv:type="String" sv:multiple="true">
+          <sv:value>541ea579-4398-4dc0-8097-cade80b1884b</sv:value>
+          <sv:value>fc0de174-e65f-48bd-a39a-07f0991b23a3</sv:value>
+          <sv:value>e35ab546-533a-4295-b275-7199e52d3aa6</sv:value>
+          <sv:value>62b8dd7a-ccf9-463a-a770-3f445f2edcef</sv:value>
+          <sv:value>c5a41f30-985c-4a3b-8679-e1233d608df8</sv:value>
+          <sv:value>996bcac5-86cf-49b5-a7a3-16a74863e814</sv:value>
+          <sv:value>2c21a29c-a5d1-4e84-aec4-594e5bf93b25</sv:value>
+          <sv:value>fac975b6-9f9a-4b1a-a0bd-c5b982d61912</sv:value>
+          <sv:value>cafebabe-cafe-babe-cafe-babecafebabe</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:availability" sv:type="String" sv:multiple="true">
+          <sv:value>live</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:related___pathreference" sv:type="String">
+          <sv:value>news/test-case-1/parent-type</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostd:state" sv:type="String">
+          <sv:value>published</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostd:stateSummary" sv:type="String">
+          <sv:value>live</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:createdBy" sv:type="String">
+          <sv:value>admin</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:creationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:25:23.654+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:lastModificationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:27:07.076+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:lastModifiedBy" sv:type="String">
+          <sv:value>admin</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippostdpubwf:publicationDate" sv:type="Date">
+          <sv:value>2017-09-10T14:27:13.272+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippotranslation:id" sv:type="String">
+          <sv:value>067e467b-dd3e-4c8e-ab29-2ee0166ce3de</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippotranslation:locale" sv:type="String">
+          <sv:value>nl</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:author" sv:type="String">
+          <sv:value/>
+        </sv:property>
+        <sv:property sv:name="ns:browserTitle" sv:type="String">
+          <sv:value>Donec id dui massa. Sed risus ipsum, ultricies nec venenatis gravida</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:description" sv:type="String">
+          <sv:value>Donec id dui massa. Sed risus ipsum, ultricies nec venenatis gravida, eleifend fermentum enim. Sed risus ipsum id dui mass.</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:genericNewsItem" sv:type="Boolean">
+          <sv:value>true</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:hideFromSearch" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:hideFromSitemap" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:introduction" sv:type="String">
+          <sv:value>Donec id dui massa. Sed risus ipsum, ultricies nec venenatis gravida, eleifend fermentum enim. Mauris vestibulum, nisl vitae porttitor hendrerit, diam dui fringilla nibh, a vehicula sapien diam vitae est.</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:keywords" sv:type="String">
+          <sv:value/>
+        </sv:property>
+        <sv:property sv:name="ns:releaseDate" sv:type="Date">
+          <sv:value>2017-09-10T14:25:00.000+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:share" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:subjecttags" sv:type="String" sv:multiple="true">
+          <sv:value>actueel</sv:value>
+          <sv:value>onderwijs</sv:value>
+        </sv:property>
+        <sv:property sv:name="ns:thematags" sv:type="String" sv:multiple="true"/>
+        <sv:property sv:name="ns:title" sv:type="String">
+          <sv:value>Donec id dui massa. Sed risus ipsum, ultricies nec venenatis gravida</sv:value>
+        </sv:property>
+        <sv:node sv:name="ns:headerImage">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>hippogallerypicker:imagelink</sv:value>
+          </sv:property>
+          <sv:property sv:name="hippo:docbase" sv:type="String">
+            <sv:value>e5eafb42-b386-44c5-8090-2b3d0ef3a36e</sv:value>
+          </sv:property>
+          <sv:property sv:name="hippo:facets" sv:type="String" sv:multiple="true"/>
+          <sv:property sv:name="hippo:modes" sv:type="String" sv:multiple="true"/>
+          <sv:property sv:name="hippo:values" sv:type="String" sv:multiple="true"/>
+        </sv:node>
+      </sv:node>
+    </sv:node>
+  </sv:node>
+</sv:node>

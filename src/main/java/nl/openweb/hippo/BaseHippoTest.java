@@ -11,7 +11,7 @@ import nl.openweb.jcr.InMemoryJcrRepository;
  * @author Ebrahim Aharpour
  * @since 8/27/2017
  */
-public abstract class JackrabbitBaseHippoTest extends AbstractHippoTest {
+public abstract class BaseHippoTest extends AbstractHippoTest {
 
     private InMemoryJcrRepository repository;
 

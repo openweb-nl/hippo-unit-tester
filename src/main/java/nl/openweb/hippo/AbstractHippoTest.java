@@ -20,47 +20,66 @@ import org.hippoecm.hst.content.beans.manager.ObjectConverter;
 import org.hippoecm.hst.content.beans.query.HstQueryManager;
 import org.hippoecm.hst.content.beans.query.HstQueryManagerImpl;
 import org.hippoecm.hst.content.beans.standard.HippoBean;
+import org.hippoecm.hst.core.component.HstComponentException;
 import org.hippoecm.hst.core.request.HstRequestContext;
 import org.hippoecm.hst.core.search.HstQueryManagerFactoryImpl;
 import org.hippoecm.hst.mock.core.component.MockHstRequest;
 import org.hippoecm.hst.mock.core.component.MockHstResponse;
+import org.hippoecm.hst.mock.core.container.MockComponentManager;
+import org.hippoecm.hst.mock.core.request.MockComponentConfiguration;
 import org.hippoecm.hst.mock.core.request.MockHstRequestContext;
 import org.hippoecm.hst.mock.core.request.MockResolvedSiteMapItem;
+import org.hippoecm.hst.site.HstServices;
 import org.hippoecm.hst.site.content.ObjectConverterFactoryBean;
 import org.hippoecm.hst.util.PathUtils;
 import org.hippoecm.repository.util.DateTools;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import nl.openweb.hippo.exception.SetupTeardownException;
+import nl.openweb.hippo.mock.DelegatingComponentManager;
 import nl.openweb.hippo.mock.MockMount;
 import nl.openweb.hippo.mock.MockResolvedMount;
 import nl.openweb.jcr.Importer;
+
+
+import static org.hippoecm.hst.utils.ParameterUtils.PARAMETERS_INFO_ATTRIBUTE;
 
 /**
  * @author Ebrahim Aharpour
  * @since 8/20/2017
  */
 public abstract class AbstractHippoTest {
-    protected MockHstResponse response = new MockHstResponse();
+
+    private static DelegatingComponentManager delegatingComponentManager = new DelegatingComponentManager();
+    protected Importer importer;
     protected Node rootNode;
+    protected MockHstResponse response = new MockHstResponse();
     protected MockHstRequest request = new MockHstRequest();
     protected MockHstRequestContext requestContext = new MockHstRequestContext();
+    protected MockComponentManager componentManager = new MockComponentManager();
     protected ObjectConverter objectConverter;
     protected ObjectBeanManager objectBeanManager;
     protected HstQueryManagerImpl hstQueryManager;
     protected MockResolvedSiteMapItem resolvedSiteMapItem;
     protected MockResolvedMount resolvedMount;
     protected MockMount mockMount;
+    protected MockComponentConfiguration componentConfiguration = new MockComponentConfiguration();
+
+    static {
+        HstServices.setComponentManager(delegatingComponentManager);
+    }
 
     public void setup() {
         try {
-            importNodeStructure(getImporter());
+            importer = getImporter();
+            importNodeStructure(importer);
             setRequestContextProvider();
             setObjectConverter();
             setQueryManager();
             setResolvedSiteMapItem();
             setMount();
             request.setRequestContext(requestContext);
+            delegatingComponentManager.setComponentManager(componentManager);
         } catch (Exception e) {
             throw new SetupTeardownException(e);
         }
@@ -87,13 +106,31 @@ public abstract class AbstractHippoTest {
 
     protected abstract String getAnnotatedClassesResourcePath();
 
-    protected void setContentBean(String path) throws ObjectBeanManagerException {
-        HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
-        requestContext.setContentBean(hippoBean);
+    protected void setContentBean(String path) {
+        try {
+            HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
+            requestContext.setContentBean(hippoBean);
+        } catch (ObjectBeanManagerException e) {
+            throw new HstComponentException(e);
+        }
+    }
+
+    protected void setSiteContentBase(String path) {
+        try {
+            HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
+            requestContext.setSiteContentBasePath(path);
+            requestContext.setSiteContentBaseBean(hippoBean);
+        } catch (ObjectBeanManagerException e) {
+            throw new HstComponentException(e);
+        }
     }
 
     protected void setChannelInfo(ChannelInfo channelInfo) {
         this.mockMount.setChannelInfo(channelInfo);
+    }
+
+    protected void setComponentParameterInfo(Object parameterInfo) {
+        this.request.setAttribute(PARAMETERS_INFO_ATTRIBUTE, parameterInfo);
     }
 
     private void setMount() {
@@ -162,6 +199,7 @@ public abstract class AbstractHippoTest {
     public void teardown() {
         try {
             clearRequestContextProvider();
+            delegatingComponentManager.remove();
         } catch (Exception e) {
             throw new SetupTeardownException(e);
         }
