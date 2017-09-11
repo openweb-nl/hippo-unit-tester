@@ -69,6 +69,15 @@ public abstract class AbstractHippoTest {
         HstServices.setComponentManager(delegatingComponentManager);
     }
 
+    public void teardown() {
+        try {
+            clearRequestContextProvider();
+            delegatingComponentManager.remove();
+        } catch (Exception e) {
+            throw new SetupTeardownException(e);
+        }
+    }
+
     public void setup() {
         try {
             importer = getImporter();
@@ -87,24 +96,14 @@ public abstract class AbstractHippoTest {
 
     protected abstract Importer getImporter();
 
-    private void importNodeStructure(Importer importer) throws IOException, RepositoryException, JAXBException {
-        String pathToResource = getPathToTestResource();
-        if (pathToResource != null) {
-            if (pathToResource.endsWith(".xml")) {
-                this.rootNode = importer.createNodesFromXml(getResourceAsStream(pathToResource));
-            } else {
-                this.rootNode = importer.createNodesFromJson(getResourceAsStream(pathToResource));
-            }
-        } else {
-            this.rootNode = importer.createNodesFromJson("{}");
-        }
-        requestContext.setSession(this.rootNode.getSession());
-    }
-
-
     protected abstract String getPathToTestResource();
 
     protected abstract String getAnnotatedClassesResourcePath();
+
+    @SuppressWarnings("unchecked")
+    protected  <T> T getRequestAttribute(String name) {
+        return (T) request.getAttribute(name);
+    }
 
     protected void setContentBean(String path) {
         try {
@@ -131,6 +130,20 @@ public abstract class AbstractHippoTest {
 
     protected void setComponentParameterInfo(Object parameterInfo) {
         this.request.setAttribute(PARAMETERS_INFO_ATTRIBUTE, parameterInfo);
+    }
+
+    private void importNodeStructure(Importer importer) throws IOException, RepositoryException, JAXBException {
+        String pathToResource = getPathToTestResource();
+        if (pathToResource != null) {
+            if (pathToResource.endsWith(".xml")) {
+                this.rootNode = importer.createNodesFromXml(getResourceAsStream(pathToResource));
+            } else {
+                this.rootNode = importer.createNodesFromJson(getResourceAsStream(pathToResource));
+            }
+        } else {
+            this.rootNode = importer.createNodesFromJson("{}");
+        }
+        requestContext.setSession(this.rootNode.getSession());
     }
 
     private void setMount() {
@@ -195,15 +208,5 @@ public abstract class AbstractHippoTest {
         set.invoke(null);
         set.setAccessible(false);
     }
-
-    public void teardown() {
-        try {
-            clearRequestContextProvider();
-            delegatingComponentManager.remove();
-        } catch (Exception e) {
-            throw new SetupTeardownException(e);
-        }
-    }
-
 
 }

@@ -64,7 +64,7 @@ public class EssentialsListComponentTest extends BaseHippoTest {
         setParamInfo("", "ns:NewsPage", 5,
                 "ns:releaseDate", "asc");
         component.doBeforeRender(request, response);
-        IterablePagination<NewsPage> pageable = (IterablePagination<NewsPage>) request.getAttribute("pageable");
+        IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
         List<NewsPage> items = pageable.getItems();
         Assert.assertEquals(3, items.size());
         Assert.assertEquals("news1", items.get(0).getName());
@@ -72,12 +72,14 @@ public class EssentialsListComponentTest extends BaseHippoTest {
         Assert.assertEquals("news3", items.get(2).getName());
     }
 
+
+
     @Test
     public void descending() throws RepositoryException {
         setParamInfo("", "ns:NewsPage", 5,
                 "ns:releaseDate", "desc");
         component.doBeforeRender(request, response);
-        IterablePagination<NewsPage> pageable = (IterablePagination<NewsPage>) request.getAttribute("pageable");
+        IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
         List<NewsPage> items = pageable.getItems();
         Assert.assertEquals(3, items.size());
         Assert.assertEquals("news3", items.get(0).getName());
@@ -90,7 +92,7 @@ public class EssentialsListComponentTest extends BaseHippoTest {
         setParamInfo("", "ns:NewsPage", 5,
                 "ns:title", "asc");
         component.doBeforeRender(request, response);
-        IterablePagination<NewsPage> pageable = (IterablePagination<NewsPage>) request.getAttribute("pageable");
+        IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
         List<NewsPage> items = pageable.getItems();
         Assert.assertEquals(3, items.size());
         Assert.assertEquals("news3", items.get(0).getName());
@@ -103,11 +105,23 @@ public class EssentialsListComponentTest extends BaseHippoTest {
         setParamInfo("", "ns:NewsPage", 2,
                 "ns:releaseDate", "asc");
         component.doBeforeRender(request, response);
-        IterablePagination<NewsPage> pageable = (IterablePagination<NewsPage>) request.getAttribute("pageable");
+        IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
         List<NewsPage> items = pageable.getItems();
         Assert.assertEquals(2, items.size());
         Assert.assertEquals("news1", items.get(0).getName());
         Assert.assertEquals("news2", items.get(1).getName());
+    }
+
+    @Test
+    public void paging() throws RepositoryException {
+        setParamInfo("", "ns:NewsPage", 2,
+                "ns:releaseDate", "asc");
+        request.addParameter("page", "2");
+        component.doBeforeRender(request, response);
+        IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
+        List<NewsPage> items = pageable.getItems();
+        Assert.assertEquals(1, items.size());
+        Assert.assertEquals("news3", items.get(0).getName());
     }
 
     @Test
@@ -116,7 +130,7 @@ public class EssentialsListComponentTest extends BaseHippoTest {
                 "ns:releaseDate", "asc");
         request.addParameter("query", "sapien");
         component.doBeforeRender(request, response);
-        IterablePagination<NewsPage> pageable = (IterablePagination<NewsPage>) request.getAttribute("pageable");
+        IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
         List<NewsPage> items = pageable.getItems();
         Assert.assertEquals(1, items.size());
         Assert.assertEquals("news1", items.get(0).getName());
@@ -130,7 +144,7 @@ public class EssentialsListComponentTest extends BaseHippoTest {
         setParamInfo("", "ns:AnotherType", 2,
                 "ns:releaseDate", "asc");
         component.doBeforeRender(request, response);
-        IterablePagination<AnotherType> pageable = (IterablePagination<AnotherType>) request.getAttribute("pageable");
+        IterablePagination<AnotherType> pageable = getRequestAttribute("pageable");
         List<AnotherType> items = pageable.getItems();
         Assert.assertEquals(1, items.size());
         Assert.assertEquals("another-type", items.get(0).getName());
