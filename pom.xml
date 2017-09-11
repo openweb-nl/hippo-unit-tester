@@ -25,7 +25,7 @@
 
   <groupId>nl.openweb.hippo</groupId>
   <artifactId>hippo-unit-tester</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
 
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -36,7 +36,7 @@
     <connection>scm:git:git@github.com:openweb-nl/hippo-unit-tester.git</connection>
     <developerConnection>scm:git:git@github.com:openweb-nl/hippo-unit-tester.git</developerConnection>
     <url>https://github.com/openweb-nl/hippo-unit-tester</url>
-    <tag>hippo-unit-tester-1.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
