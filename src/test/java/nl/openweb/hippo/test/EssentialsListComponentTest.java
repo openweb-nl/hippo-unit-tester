@@ -16,7 +16,6 @@
 package nl.openweb.hippo.test;
 
 import javax.jcr.RepositoryException;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.After;
@@ -30,8 +29,10 @@ import org.onehippo.cms7.essentials.components.info.EssentialsListComponentInfo;
 import org.onehippo.cms7.essentials.components.paging.IterablePagination;
 
 import nl.openweb.hippo.BaseHippoTest;
+import nl.openweb.hippo.exception.SetupTeardownException;
 import nl.openweb.hippo.test.domain.AnotherType;
 import nl.openweb.hippo.test.domain.NewsPage;
+import nl.openweb.jcr.utils.NodeTypeUtils;
 
 
 import static org.mockito.Mockito.mock;
@@ -48,22 +49,21 @@ public class EssentialsListComponentTest extends BaseHippoTest {
 
     @Before
     public void setup() {
-        super.setup();
-        setSiteContentBase("/test-case-1");
-
-        request.setParameterMap("", new HashMap<>());
-        component.init(null, componentConfiguration);
+        try {
+            super.setup();
+            NodeTypeUtils.createNodeType(rootNode.getSession(), "ns:NewsPage", "ns:AnotherType");
+            importer.createNodesFromXml(getResourceAsStream("news.xml"),
+                    "/content/documents/mychannel/news", "hippostd:folder");
+            setSiteContentBase("/content/documents/mychannel");
+            component.init(null, componentConfiguration);
+        } catch (RepositoryException e) {
+            throw new SetupTeardownException(e);
+        }
     }
 
     @After
     public void teardown() {
         super.teardown();
-    }
-
-
-    @Override
-    protected String getPathToTestResource() {
-        return "news.xml";
     }
 
     @Override
@@ -76,8 +76,8 @@ public class EssentialsListComponentTest extends BaseHippoTest {
 
     @Test
     public void ascending() throws RepositoryException {
-        setParamInfo("", "ns:NewsPage", 5,
-                "ns:releaseDate", "asc");
+        setParamInfo("news", "ns:NewsPage", 5,
+                "ns:releaseDate", "asc", false);
         component.doBeforeRender(request, response);
         IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
         List<NewsPage> items = pageable.getItems();
@@ -88,11 +88,10 @@ public class EssentialsListComponentTest extends BaseHippoTest {
     }
 
 
-
     @Test
     public void descending() throws RepositoryException {
-        setParamInfo("", "ns:NewsPage", 5,
-                "ns:releaseDate", "desc");
+        setParamInfo("news", "ns:NewsPage", 5,
+                "ns:releaseDate", "desc", false);
         component.doBeforeRender(request, response);
         IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
         List<NewsPage> items = pageable.getItems();
@@ -104,8 +103,8 @@ public class EssentialsListComponentTest extends BaseHippoTest {
 
     @Test
     public void sortByTitle() throws RepositoryException {
-        setParamInfo("", "ns:NewsPage", 5,
-                "ns:title", "asc");
+        setParamInfo("news", "ns:NewsPage", 5,
+                "ns:title", "asc", false);
         component.doBeforeRender(request, response);
         IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
         List<NewsPage> items = pageable.getItems();
@@ -117,8 +116,8 @@ public class EssentialsListComponentTest extends BaseHippoTest {
 
     @Test
     public void pageSize() throws RepositoryException {
-        setParamInfo("", "ns:NewsPage", 2,
-                "ns:releaseDate", "asc");
+        setParamInfo("news", "ns:NewsPage", 2,
+                "ns:releaseDate", "asc", false);
         component.doBeforeRender(request, response);
         IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
         List<NewsPage> items = pageable.getItems();
@@ -129,8 +128,8 @@ public class EssentialsListComponentTest extends BaseHippoTest {
 
     @Test
     public void paging() throws RepositoryException {
-        setParamInfo("", "ns:NewsPage", 2,
-                "ns:releaseDate", "asc");
+        setParamInfo("news", "ns:NewsPage", 2,
+                "ns:releaseDate", "asc", false);
         request.addParameter("page", "2");
         component.doBeforeRender(request, response);
         IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
@@ -141,8 +140,8 @@ public class EssentialsListComponentTest extends BaseHippoTest {
 
     @Test
     public void search() throws RepositoryException {
-        setParamInfo("", "ns:NewsPage", 2,
-                "ns:releaseDate", "asc");
+        setParamInfo("news", "ns:NewsPage", 2,
+                "ns:releaseDate", "asc", false);
         request.addParameter("query", "sapien");
         component.doBeforeRender(request, response);
         IterablePagination<NewsPage> pageable = getRequestAttribute("pageable");
@@ -156,8 +155,8 @@ public class EssentialsListComponentTest extends BaseHippoTest {
 
     @Test
     public void type() throws RepositoryException {
-        setParamInfo("", "ns:AnotherType", 2,
-                "ns:releaseDate", "asc");
+        setParamInfo("news", "ns:AnotherType", 5,
+                "ns:releaseDate", "asc", false);
         component.doBeforeRender(request, response);
         IterablePagination<AnotherType> pageable = getRequestAttribute("pageable");
         List<AnotherType> items = pageable.getItems();
@@ -165,11 +164,21 @@ public class EssentialsListComponentTest extends BaseHippoTest {
         Assert.assertEquals("another-type", items.get(0).getName());
     }
 
+    @Test
+    public void includeSubtypes() throws RepositoryException {
+        setParamInfo("news", "ns:AnotherType", 5,
+                "ns:releaseDate", "asc", true);
+        component.doBeforeRender(request, response);
+        IterablePagination<AnotherType> pageable = getRequestAttribute("pageable");
+        List<AnotherType> items = pageable.getItems();
+        Assert.assertEquals(4, items.size());
+    }
 
-    private void setParamInfo(String path, String type, int pageSize, String sortField, String sortOrder) {
+
+    private void setParamInfo(String path, String type, int pageSize, String sortField, String sortOrder, boolean includeSubtypes) {
         EssentialsListComponentInfo paramInfo = mock(EssentialsListComponentInfo.class);
         when(paramInfo.getDocumentTypes()).thenReturn(type);
-        when(paramInfo.getIncludeSubtypes()).thenReturn(false);
+        when(paramInfo.getIncludeSubtypes()).thenReturn(includeSubtypes);
         when(paramInfo.getPath()).thenReturn(path);
         when(paramInfo.getPageSize()).thenReturn(pageSize);
         when(paramInfo.getShowPagination()).thenReturn(true);

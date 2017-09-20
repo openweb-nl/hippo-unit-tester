@@ -36,6 +36,7 @@ import org.hippoecm.hst.content.beans.query.HstQueryManager;
 import org.hippoecm.hst.content.beans.query.HstQueryManagerImpl;
 import org.hippoecm.hst.content.beans.standard.HippoBean;
 import org.hippoecm.hst.core.component.HstComponentException;
+import org.hippoecm.hst.core.container.ComponentManager;
 import org.hippoecm.hst.core.request.HstRequestContext;
 import org.hippoecm.hst.core.search.HstQueryManagerFactoryImpl;
 import org.hippoecm.hst.mock.core.component.MockHstRequest;
@@ -64,6 +65,8 @@ import static org.hippoecm.hst.utils.ParameterUtils.PARAMETERS_INFO_ATTRIBUTE;
  * @since 8/20/2017
  */
 public abstract class AbstractHippoTest {
+
+    public static String COMPONENT_REFERENCE_NAMESPACE = "r1_r2";
 
     private static DelegatingComponentManager delegatingComponentManager = new DelegatingComponentManager();
     protected Importer importer;
@@ -95,25 +98,37 @@ public abstract class AbstractHippoTest {
 
     public void setup() {
         try {
+            setupParameterAndAttributeMaps();
             importer = getImporter();
             importNodeStructure(importer);
+            initializedRequest();
             setRequestContextProvider();
             setObjectConverter();
             setQueryManager();
             setResolvedSiteMapItem();
             setMount();
             request.setRequestContext(requestContext);
-            delegatingComponentManager.setComponentManager(componentManager);
+            setComponentManager(componentManager);
         } catch (Exception e) {
             throw new SetupTeardownException(e);
         }
     }
 
+    public static void setComponentManager(ComponentManager componentManager) {
+        delegatingComponentManager.setComponentManager(componentManager);
+    }
+
     protected abstract Importer getImporter();
 
-    protected abstract String getPathToTestResource();
-
     protected abstract String getAnnotatedClassesResourcePath();
+
+    protected String getPathToTestResource() {
+        return "/skeleton.xml";
+    }
+
+    protected String getComponentReferenceNamespace() {
+        return COMPONENT_REFERENCE_NAMESPACE;
+    }
 
     @SuppressWarnings("unchecked")
     protected  <T> T getRequestAttribute(String name) {
@@ -145,6 +160,17 @@ public abstract class AbstractHippoTest {
 
     protected void setComponentParameterInfo(Object parameterInfo) {
         this.request.setAttribute(PARAMETERS_INFO_ATTRIBUTE, parameterInfo);
+    }
+
+    private void setupParameterAndAttributeMaps() {
+        request.setAttributeMap("", new HashMap<>());
+        request.setAttributeMap(COMPONENT_REFERENCE_NAMESPACE, new HashMap<>());
+        request.setParameterMap("", new HashMap<>());
+        request.setParameterMap(COMPONENT_REFERENCE_NAMESPACE, new HashMap<>());
+    }
+
+    private void initializedRequest() {
+        request.setReferencePath(getComponentReferenceNamespace());
     }
 
     private void importNodeStructure(Importer importer) throws IOException, RepositoryException, JAXBException {
@@ -199,7 +225,7 @@ public abstract class AbstractHippoTest {
 
     }
 
-    private InputStream getResourceAsStream(String pathToResource) {
+    protected InputStream getResourceAsStream(String pathToResource) {
         InputStream result;
         if (pathToResource.startsWith("/")) {
             result = this.getClass().getClassLoader().getResourceAsStream(PathUtils.normalizePath(pathToResource));
