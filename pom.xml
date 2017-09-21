@@ -63,6 +63,10 @@
       </releases>
       <layout>default</layout>
     </repository>
+    <repository>
+      <id>openweb-maven-public</id>
+      <url>https://maven.open-web.nl/content/repositories/public/</url>
+    </repository>
   </repositories>
 
   <dependencies>
