@@ -15,6 +15,8 @@
  */
 package nl.openweb.hippo;
 
+import javax.jcr.Credentials;
+import javax.jcr.Repository;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
 
@@ -28,14 +30,27 @@ import nl.openweb.jcr.InMemoryJcrRepository;
  */
 public abstract class BaseHippoTest extends AbstractHippoTest {
 
+    public static final SimpleCredentials ADMIN = new SimpleCredentials("admin", "admin".toCharArray());
     private InMemoryJcrRepository repository;
+
+    @Override
+    public void setup() {
+        super.setup();
+        componentManager.addComponent(Repository.class.getName(), repository);
+        componentManager.addComponent(Credentials.class.getName() + ".writable", getWritableCredentials());
+    }
+
+    protected Credentials getWritableCredentials() {
+        return ADMIN;
+    }
 
     @Override
     protected Importer getImporter() {
         try {
             repository = new InMemoryJcrRepository();
+
             return new Importer.Builder(() -> {
-                Session session = repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
+                Session session = repository.login(ADMIN);
                 return session.getRootNode();
             })
                     .addUnknownTypes(true)
