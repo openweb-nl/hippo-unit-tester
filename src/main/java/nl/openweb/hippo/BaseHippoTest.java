@@ -37,6 +37,10 @@ public abstract class BaseHippoTest extends AbstractHippoTest {
     public void setup() {
         super.setup();
         componentManager.addComponent(Repository.class.getName(), repository);
+        componentManager.addComponent(Credentials.class.getName() + ".hstconfigreader", getWritableCredentials());
+        componentManager.addComponent(Credentials.class.getName() + ".default", getWritableCredentials());
+        componentManager.addComponent(Credentials.class.getName() + ".binaries", getWritableCredentials());
+        componentManager.addComponent(Credentials.class.getName() + ".preview", getWritableCredentials());
         componentManager.addComponent(Credentials.class.getName() + ".writable", getWritableCredentials());
     }
 
