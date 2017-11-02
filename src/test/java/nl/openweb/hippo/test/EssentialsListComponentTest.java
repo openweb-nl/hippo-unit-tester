@@ -32,7 +32,6 @@ import nl.openweb.hippo.BaseHippoTest;
 import nl.openweb.hippo.exception.SetupTeardownException;
 import nl.openweb.hippo.test.domain.AnotherType;
 import nl.openweb.hippo.test.domain.NewsPage;
-import nl.openweb.jcr.utils.NodeTypeUtils;
 
 
 import static org.mockito.Mockito.mock;
@@ -51,7 +50,7 @@ public class EssentialsListComponentTest extends BaseHippoTest {
     public void setup() {
         try {
             super.setup();
-            NodeTypeUtils.createNodeType(rootNode.getSession(), "ns:NewsPage", "ns:AnotherType");
+            registerNodeType("ns:NewsPage", "ns:AnotherType");
             importer.createNodesFromXml(getResourceAsStream("news.xml"),
                     "/content/documents/mychannel/news", "hippostd:folder");
             setSiteContentBase("/content/documents/mychannel");

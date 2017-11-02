@@ -37,11 +37,13 @@ import org.hippoecm.hst.content.beans.query.HstQueryManagerImpl;
 import org.hippoecm.hst.content.beans.standard.HippoBean;
 import org.hippoecm.hst.core.component.HstComponentException;
 import org.hippoecm.hst.core.container.ComponentManager;
+import org.hippoecm.hst.core.container.ContainerConfiguration;
 import org.hippoecm.hst.core.request.HstRequestContext;
 import org.hippoecm.hst.core.search.HstQueryManagerFactoryImpl;
 import org.hippoecm.hst.mock.core.component.MockHstRequest;
 import org.hippoecm.hst.mock.core.component.MockHstResponse;
 import org.hippoecm.hst.mock.core.container.MockComponentManager;
+import org.hippoecm.hst.mock.core.container.MockContainerConfiguration;
 import org.hippoecm.hst.mock.core.request.MockComponentConfiguration;
 import org.hippoecm.hst.mock.core.request.MockHstRequestContext;
 import org.hippoecm.hst.mock.core.request.MockResolvedSiteMapItem;
@@ -56,6 +58,7 @@ import nl.openweb.hippo.mock.DelegatingComponentManager;
 import nl.openweb.hippo.mock.MockMount;
 import nl.openweb.hippo.mock.MockResolvedMount;
 import nl.openweb.jcr.Importer;
+import nl.openweb.jcr.utils.NodeTypeUtils;
 
 
 import static org.hippoecm.hst.utils.ParameterUtils.PARAMETERS_INFO_ATTRIBUTE;
@@ -74,14 +77,20 @@ public abstract class AbstractHippoTest {
     protected MockHstResponse response = new MockHstResponse();
     protected MockHstRequest request = new MockHstRequest();
     protected MockHstRequestContext requestContext = new MockHstRequestContext();
-    protected MockComponentManager componentManager = new MockComponentManager();
+    protected MockContainerConfiguration containerConfiguration = new MockContainerConfiguration();
     protected ObjectConverter objectConverter;
     protected ObjectBeanManager objectBeanManager;
     protected HstQueryManagerImpl hstQueryManager;
     protected MockResolvedSiteMapItem resolvedSiteMapItem;
     protected MockResolvedMount resolvedMount;
-    protected MockMount mockMount;
+    protected MockMount mount;
     protected MockComponentConfiguration componentConfiguration = new MockComponentConfiguration();
+    protected MockComponentManager componentManager = new MockComponentManager() {
+        @Override
+        public ContainerConfiguration getContainerConfiguration() {
+            return containerConfiguration;
+        }
+    };
 
     static {
         HstServices.setComponentManager(delegatingComponentManager);
@@ -155,11 +164,27 @@ public abstract class AbstractHippoTest {
     }
 
     protected void setChannelInfo(ChannelInfo channelInfo) {
-        this.mockMount.setChannelInfo(channelInfo);
+        this.mount.setChannelInfo(channelInfo);
     }
 
     protected void setComponentParameterInfo(Object parameterInfo) {
         this.request.setAttribute(PARAMETERS_INFO_ATTRIBUTE, parameterInfo);
+    }
+
+    protected void registerMixinType(String mixinType) throws RepositoryException {
+        NodeTypeUtils.createMixin(rootNode.getSession(), mixinType);
+    }
+
+    protected void registerMixinType(String mixinType, String superType) throws RepositoryException {
+        NodeTypeUtils.createMixin(rootNode.getSession(), mixinType, superType);
+    }
+
+    protected void registerNodeType(String nodeType) throws RepositoryException {
+        NodeTypeUtils.createNodeType(rootNode.getSession(), nodeType);
+    }
+
+    protected void registerNodeType(String nodeType, String superType) throws RepositoryException {
+        NodeTypeUtils.createNodeType(rootNode.getSession(), nodeType, superType);
     }
 
     private void setupParameterAndAttributeMaps() {
@@ -188,9 +213,9 @@ public abstract class AbstractHippoTest {
     }
 
     private void setMount() {
-        this.mockMount = new MockMount();
+        this.mount = new MockMount();
         this.resolvedMount = new MockResolvedMount();
-        this.resolvedMount.setMount(this.mockMount);
+        this.resolvedMount.setMount(this.mount);
         this.requestContext.setResolvedMount(this.resolvedMount);
     }
 
