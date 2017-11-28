@@ -28,7 +28,7 @@ import nl.openweb.jcr.InMemoryJcrRepository;
  * @author Ebrahim Aharpour
  * @since 8/27/2017
  */
-public abstract class BaseHippoTest extends AbstractHippoTest {
+public abstract class BaseHippoTest extends AbstractRepoTest {
 
     public static final SimpleCredentials ADMIN = new SimpleCredentials("admin", "admin".toCharArray());
     private InMemoryJcrRepository repository;
