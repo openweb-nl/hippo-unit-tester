@@ -30,6 +30,7 @@ import org.hippoecm.hst.content.beans.standard.HippoBean;
 import org.hippoecm.hst.core.component.HstComponentException;
 import org.hippoecm.hst.core.container.ComponentManager;
 import org.hippoecm.hst.core.container.ContainerConfiguration;
+import org.hippoecm.hst.core.linking.HstLinkCreator;
 import org.hippoecm.hst.core.request.HstRequestContext;
 import org.hippoecm.hst.mock.core.component.MockHstRequest;
 import org.hippoecm.hst.mock.core.component.MockHstResponse;
@@ -42,6 +43,7 @@ import org.hippoecm.hst.site.HstServices;
 
 import nl.openweb.hippo.exception.SetupTeardownException;
 import nl.openweb.hippo.mock.DelegatingComponentManager;
+import nl.openweb.hippo.mock.MockHstLinkCreator;
 import nl.openweb.hippo.mock.MockMount;
 import nl.openweb.hippo.mock.MockResolvedMount;
 
@@ -68,6 +70,7 @@ public class SimpleHippoTest {
     protected MockResolvedSiteMapItem resolvedSiteMapItem;
     protected MockResolvedMount resolvedMount;
     protected MockMount mount;
+    protected MockHstLinkCreator hstLinkCreator = new MockHstLinkCreator();
     protected MockComponentConfiguration componentConfiguration = new MockComponentConfiguration();
     protected MockComponentManager componentManager = new MockComponentManager() {
         @Override
@@ -79,6 +82,7 @@ public class SimpleHippoTest {
     static {
         HstServices.setComponentManager(delegatingComponentManager);
     }
+
 
     public void teardown() {
         try {
@@ -99,6 +103,7 @@ public class SimpleHippoTest {
             setMount();
             request.setRequestContext(requestContext);
             setComponentManager(componentManager);
+            setHstLinkCreator(hstLinkCreator);
         } catch (Exception e) {
             throw new SetupTeardownException(e);
         }
@@ -122,9 +127,12 @@ public class SimpleHippoTest {
     }
 
     protected void setContentBean(String path) {
+        requestContext.setContentBean(getHippoBean(path));
+    }
+
+    protected HippoBean getHippoBean(String path) {
         try {
-            HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
-            requestContext.setContentBean(hippoBean);
+            return (HippoBean) requestContext.getObjectBeanManager().getObject(path);
         } catch (ObjectBeanManagerException e) {
             throw new HstComponentException(e);
         }
@@ -193,6 +201,10 @@ public class SimpleHippoTest {
         set.setAccessible(true);
         set.invoke(null);
         set.setAccessible(false);
+    }
+
+    private void setHstLinkCreator(HstLinkCreator hstLinkCreator) {
+        requestContext.setHstLinkCreator(hstLinkCreator);
     }
 
 }
