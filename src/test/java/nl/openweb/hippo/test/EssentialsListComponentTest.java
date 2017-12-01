@@ -53,6 +53,7 @@ public class EssentialsListComponentTest extends BaseHippoTest {
             registerNodeType("ns:NewsPage", "ns:AnotherType");
             importer.createNodesFromXml(getResourceAsStream("news.xml"),
                     "/content/documents/mychannel/news", "hippostd:folder");
+            recalculateHippoPaths();
             setSiteContentBase("/content/documents/mychannel");
             component.init(null, componentConfiguration);
         } catch (RepositoryException e) {

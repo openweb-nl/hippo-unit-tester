@@ -17,18 +17,21 @@
 package nl.openweb.hippo;
 
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.hippoecm.hst.component.support.spring.util.MetadataReaderClasspathResourceScanner;
 import org.hippoecm.hst.content.beans.manager.ObjectBeanManager;
 import org.hippoecm.hst.content.beans.manager.ObjectBeanManagerImpl;
 import org.hippoecm.hst.content.beans.query.HstQueryManager;
 import org.hippoecm.hst.content.beans.query.HstQueryManagerImpl;
+import org.hippoecm.hst.core.jcr.RuntimeRepositoryException;
 import org.hippoecm.hst.core.search.HstQueryManagerFactoryImpl;
 import org.hippoecm.hst.site.content.ObjectConverterFactoryBean;
 import org.hippoecm.hst.util.PathUtils;
@@ -39,12 +42,16 @@ import nl.openweb.hippo.exception.SetupTeardownException;
 import nl.openweb.jcr.Importer;
 import nl.openweb.jcr.utils.NodeTypeUtils;
 
+
+import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PATHS;
+
 /**
  * @author Ebrahim Aharpour
  * @since 11/2/2017
  */
 public abstract class AbstractRepoTest extends SimpleHippoTest {
 
+    private static final String SLASH = "/";
     protected Importer importer;
     protected Node rootNode;
 
@@ -129,5 +136,63 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
             result = this.getClass().getResourceAsStream(pathToResource);
         }
         return result;
+    }
+
+    protected void recalculateHippoPaths() {
+        recalculateHippoPaths("/content");
+    }
+
+    protected void recalculateHippoPaths(String absolutePath) {
+        try {
+            if (!absolutePath.startsWith(SLASH)) {
+                throw new IllegalArgumentException("The path is not absolute.");
+            }
+            Node node = rootNode.getNode(absolutePath.substring(1));
+            calculateHippoPaths(node, getPathsForNode(node));
+            rootNode.getSession().save();
+        } catch (RepositoryException e) {
+            throw new RuntimeRepositoryException(e);
+        }
+    }
+
+    private LinkedList<String> getPathsForNode(Node node) throws RepositoryException {
+        LinkedList<String> paths = new LinkedList<>();
+        Node parentNode = node;
+        do {
+            parentNode = parentNode.getParent();
+            paths.add(parentNode.getIdentifier());
+        } while (!parentNode.isSame(rootNode));
+        return paths;
+    }
+
+    private void calculateHippoPaths(Node node, LinkedList<String> paths) throws RepositoryException {
+        paths.add(0, node.getIdentifier());
+        setHippoPath(node, paths);
+        for (NodeIterator nodes = node.getNodes(); nodes.hasNext(); ) {
+            Node subnode = nodes.nextNode();
+            if (!subnode.isNodeType("hippo:handle")) {
+                if (!subnode.isNodeType("hippotranslation:translations")) {
+                    calculateHippoPaths(subnode, (LinkedList<String>) paths.clone());
+                }
+            } else {
+                setHandleHippoPaths(subnode, (LinkedList<String>) paths.clone());
+            }
+        }
+
+
+    }
+
+    private void setHippoPath(Node node, LinkedList<String> paths) throws RepositoryException {
+        node.setProperty(HIPPO_PATHS, paths.toArray(new String[paths.size()]));
+    }
+
+    private void setHandleHippoPaths(Node handle, LinkedList<String> paths) throws RepositoryException {
+        paths.add(0, handle.getIdentifier());
+        for (NodeIterator nodes = handle.getNodes(handle.getName()); nodes.hasNext(); ) {
+            Node subnode = nodes.nextNode();
+            paths.add(0, subnode.getIdentifier());
+            setHippoPath(subnode, paths);
+            paths.remove(0);
+        }
     }
 }

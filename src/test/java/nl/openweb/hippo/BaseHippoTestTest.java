@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package nl.openweb.hippo.test;
+package nl.openweb.hippo;
+
+import javax.jcr.Node;
+import javax.jcr.Property;
+import javax.jcr.RepositoryException;
+import javax.jcr.Value;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import nl.openweb.hippo.BaseHippoTest;
+import nl.openweb.hippo.exception.SetupTeardownException;
 
 
+import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PATHS;
 import static org.junit.Assert.*;
 
 /**
@@ -64,9 +70,42 @@ public class BaseHippoTestTest extends BaseHippoTest {
         assertNull(componentManager.getComponent(COMPONENT_NAME));
     }
 
+    @Test
+    public void recalculateHippoPathsTest() throws RepositoryException {
+        recalculateHippoPaths();
+        Node node = rootNode.getNode("content/documents");
+        testHippoPaths(node);
+    }
+
+    @Test
+    public void recalculateHippoPathsWithPathTest() throws RepositoryException {
+        recalculateHippoPaths("/content/documents/mychannel");
+        Node node = rootNode.getNode("content/documents/mychannel");
+        testHippoPaths(node);
+        node = rootNode.getNode("content/documents");
+        assertFalse(node.hasProperty(HIPPO_PATHS));
+    }
+
+    private void testHippoPaths(Node node) throws RepositoryException {
+        Property property = node.getProperty(HIPPO_PATHS);
+        for (Value value : property.getValues()) {
+            assertEquals(node.getIdentifier(), value.getString());
+            if (!node.isSame(rootNode)) {
+                node = node.getParent();
+            }
+        }
+    }
+
     @Before
     public void setup() {
-        super.setup();
+        try {
+            super.setup();
+            registerNodeType("ns:NewsPage", "ns:AnotherType");
+            importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/test/news.xml"),
+                    "/content/documents/mychannel/news", "hippostd:folder");
+        } catch (RepositoryException e) {
+            throw new SetupTeardownException(e);
+        }
     }
 
     @After

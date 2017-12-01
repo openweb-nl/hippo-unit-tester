@@ -61,18 +61,6 @@
       <sv:property sv:name="jcr:uuid" sv:type="String">
         <sv:value>3e5fd650-6f1e-41b9-a44a-2ba4775e437b</sv:value>
       </sv:property>
-      <sv:property sv:name="hippo:paths" sv:type="String" sv:multiple="true">
-        <sv:value>3e5fd650-6f1e-41b9-a44a-2ba4775e437b</sv:value>
-        <sv:value>3119bd98-9361-4b78-a81b-ad8228bc8bfb</sv:value>
-        <sv:value>aac3f7cb-6a03-4954-ae13-c51cbd1e6c11</sv:value>
-        <sv:value>e35ab546-533a-4295-b275-7199e52d3aa6</sv:value>
-        <sv:value>62b8dd7a-ccf9-463a-a770-3f445f2edcef</sv:value>
-        <sv:value>c5a41f30-985c-4a3b-8679-e1233d608df8</sv:value>
-        <sv:value>996bcac5-86cf-49b5-a7a3-16a74863e814</sv:value>
-        <sv:value>2c21a29c-a5d1-4e84-aec4-594e5bf93b25</sv:value>
-        <sv:value>fac975b6-9f9a-4b1a-a0bd-c5b982d61912</sv:value>
-        <sv:value>cafebabe-cafe-babe-cafe-babecafebabe</sv:value>
-      </sv:property>
       <sv:property sv:name="hippo:availability" sv:type="String" sv:multiple="true">
         <sv:value>live</sv:value>
       </sv:property>
@@ -178,18 +166,6 @@
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
         <sv:value>e4da5fd4-ee0d-4d37-beef-f161c8d643a1</sv:value>
-      </sv:property>
-      <sv:property sv:name="hippo:paths" sv:type="String" sv:multiple="true">
-        <sv:value>e4da5fd4-ee0d-4d37-beef-f161c8d643a1</sv:value>
-        <sv:value>23796843-e214-4ab3-bcc3-971e34d6a70f</sv:value>
-        <sv:value>aac3f7cb-6a03-4954-ae13-c51cbd1e6c11</sv:value>
-        <sv:value>e35ab546-533a-4295-b275-7199e52d3aa6</sv:value>
-        <sv:value>62b8dd7a-ccf9-463a-a770-3f445f2edcef</sv:value>
-        <sv:value>c5a41f30-985c-4a3b-8679-e1233d608df8</sv:value>
-        <sv:value>996bcac5-86cf-49b5-a7a3-16a74863e814</sv:value>
-        <sv:value>2c21a29c-a5d1-4e84-aec4-594e5bf93b25</sv:value>
-        <sv:value>fac975b6-9f9a-4b1a-a0bd-c5b982d61912</sv:value>
-        <sv:value>cafebabe-cafe-babe-cafe-babecafebabe</sv:value>
       </sv:property>
       <sv:property sv:name="hippo:availability" sv:type="String" sv:multiple="true">
         <sv:value>live</sv:value>
@@ -297,18 +273,6 @@
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
         <sv:value>51468f91-a77f-4d69-82ff-53e2877978a6</sv:value>
-      </sv:property>
-      <sv:property sv:name="hippo:paths" sv:type="String" sv:multiple="true">
-        <sv:value>51468f91-a77f-4d69-82ff-53e2877978a6</sv:value>
-        <sv:value>6e827b9d-a74f-40a7-8446-7789696ed830</sv:value>
-        <sv:value>aac3f7cb-6a03-4954-ae13-c51cbd1e6c11</sv:value>
-        <sv:value>e35ab546-533a-4295-b275-7199e52d3aa6</sv:value>
-        <sv:value>62b8dd7a-ccf9-463a-a770-3f445f2edcef</sv:value>
-        <sv:value>c5a41f30-985c-4a3b-8679-e1233d608df8</sv:value>
-        <sv:value>996bcac5-86cf-49b5-a7a3-16a74863e814</sv:value>
-        <sv:value>2c21a29c-a5d1-4e84-aec4-594e5bf93b25</sv:value>
-        <sv:value>fac975b6-9f9a-4b1a-a0bd-c5b982d61912</sv:value>
-        <sv:value>cafebabe-cafe-babe-cafe-babecafebabe</sv:value>
       </sv:property>
       <sv:property sv:name="hippo:availability" sv:type="String" sv:multiple="true">
         <sv:value>live</sv:value>
@@ -421,18 +385,6 @@
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
         <sv:value>541ea579-4398-4dc0-8097-cade80b1884b</sv:value>
-      </sv:property>
-      <sv:property sv:name="hippo:paths" sv:type="String" sv:multiple="true">
-        <sv:value>541ea579-4398-4dc0-8097-cade80b1884b</sv:value>
-        <sv:value>fc0de174-e65f-48bd-a39a-07f0991b23a3</sv:value>
-        <sv:value>aac3f7cb-6a03-4954-ae13-c51cbd1e6c11</sv:value>
-        <sv:value>e35ab546-533a-4295-b275-7199e52d3aa6</sv:value>
-        <sv:value>62b8dd7a-ccf9-463a-a770-3f445f2edcef</sv:value>
-        <sv:value>c5a41f30-985c-4a3b-8679-e1233d608df8</sv:value>
-        <sv:value>996bcac5-86cf-49b5-a7a3-16a74863e814</sv:value>
-        <sv:value>2c21a29c-a5d1-4e84-aec4-594e5bf93b25</sv:value>
-        <sv:value>fac975b6-9f9a-4b1a-a0bd-c5b982d61912</sv:value>
-        <sv:value>cafebabe-cafe-babe-cafe-babecafebabe</sv:value>
       </sv:property>
       <sv:property sv:name="hippo:availability" sv:type="String" sv:multiple="true">
         <sv:value>live</sv:value>
