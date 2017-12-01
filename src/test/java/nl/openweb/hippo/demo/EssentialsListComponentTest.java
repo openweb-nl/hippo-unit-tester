@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.openweb.hippo.test;
+package nl.openweb.hippo.demo;
 
 import javax.jcr.RepositoryException;
 import java.util.List;
@@ -30,8 +30,8 @@ import org.onehippo.cms7.essentials.components.paging.IterablePagination;
 
 import nl.openweb.hippo.BaseHippoTest;
 import nl.openweb.hippo.exception.SetupTeardownException;
-import nl.openweb.hippo.test.domain.AnotherType;
-import nl.openweb.hippo.test.domain.NewsPage;
+import nl.openweb.hippo.demo.domain.AnotherType;
+import nl.openweb.hippo.demo.domain.NewsPage;
 
 
 import static org.mockito.Mockito.mock;
@@ -71,7 +71,7 @@ public class EssentialsListComponentTest extends BaseHippoTest {
         return "classpath*:org/onehippo/forge/**/*.class, " +
                 "classpath*:com/onehippo/**/*.class, " +
                 "classpath*:org/onehippo/cms7/hst/beans/**/*.class, " +
-                "classpath*:nl/openweb/hippo/test/domain/**/*.class";
+                "classpath*:nl/openweb/hippo/demo/domain/**/*.class";
     }
 
     @Test

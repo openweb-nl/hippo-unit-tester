@@ -43,7 +43,7 @@ public class MockHstLinkCreatorTest extends BaseHippoTest {
     @Before
     public void setup() {
         super.setup();
-        importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/test/news.xml"),
+        importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/demo/news.xml"),
                 "/content/documents/mychannel/news", "hippostd:folder");
 
     }
@@ -133,7 +133,7 @@ public class MockHstLinkCreatorTest extends BaseHippoTest {
         return "classpath*:org/onehippo/forge/**/*.class, " +
                 "classpath*:com/onehippo/**/*.class, " +
                 "classpath*:org/onehippo/cms7/hst/beans/**/*.class, " +
-                "classpath*:nl/openweb/hippo/test/domain/**/*.class";
+                "classpath*:nl/openweb/hippo/demo/domain/**/*.class";
     }
 
 }

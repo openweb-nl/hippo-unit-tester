@@ -101,7 +101,7 @@ public class BaseHippoTestTest extends BaseHippoTest {
         try {
             super.setup();
             registerNodeType("ns:NewsPage", "ns:AnotherType");
-            importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/test/news.xml"),
+            importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/demo/news.xml"),
                     "/content/documents/mychannel/news", "hippostd:folder");
         } catch (RepositoryException e) {
             throw new SetupTeardownException(e);
@@ -118,7 +118,7 @@ public class BaseHippoTestTest extends BaseHippoTest {
         return "classpath*:org/onehippo/forge/**/*.class, " +
                 "classpath*:com/onehippo/**/*.class, " +
                 "classpath*:org/onehippo/cms7/hst/beans/**/*.class, " +
-                "classpath*:nl/openweb/hippo/test/domain/**/*.class";
+                "classpath*:nl/openweb/hippo/demo/domain/**/*.class";
     }
 
 }
