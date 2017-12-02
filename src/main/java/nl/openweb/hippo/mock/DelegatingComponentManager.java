@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.hippoecm.hst.core.container.ComponentManager;
-import org.hippoecm.hst.core.container.ComponentsException;
 import org.hippoecm.hst.core.container.ContainerConfiguration;
 
 /**
@@ -124,7 +123,7 @@ public class DelegatingComponentManager implements ComponentManager {
     }
 
     @Override
-    public <T> T getComponent(Class<T> requiredType) throws ComponentsException {
+    public <T> T getComponent(Class<T> requiredType) {
         T result = null;
         ComponentManager cm = this.componentManager.get();
         if (cm != null) {
@@ -154,7 +153,7 @@ public class DelegatingComponentManager implements ComponentManager {
     }
 
     @Override
-    public <T> T getComponent(Class<T> requiredType, String... addonModuleNames) throws ComponentsException {
+    public <T> T getComponent(Class<T> requiredType, String... addonModuleNames) {
         T result = null;
         ComponentManager cm = this.componentManager.get();
         if (cm != null) {

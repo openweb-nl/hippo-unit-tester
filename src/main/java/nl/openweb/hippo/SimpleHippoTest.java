@@ -56,7 +56,7 @@ import static org.hippoecm.hst.utils.ParameterUtils.PARAMETERS_INFO_ATTRIBUTE;
  */
 public class SimpleHippoTest {
 
-    public static String COMPONENT_REFERENCE_NAMESPACE = "r1_r2";
+    public static final String COMPONENT_REFERENCE_NAMESPACE = "r1_r2";
 
     private static DelegatingComponentManager delegatingComponentManager = new DelegatingComponentManager();
 

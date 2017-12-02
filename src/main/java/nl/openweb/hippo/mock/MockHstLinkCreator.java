@@ -176,7 +176,7 @@ public class MockHstLinkCreator implements HstLinkCreator {
 
     @Override
     public void clear() {
-
+        // nothing to do here
     }
 
     private HstLink getMockLink(Node node) {
