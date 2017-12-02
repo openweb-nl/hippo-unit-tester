@@ -20,7 +20,11 @@ import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 
+import org.apache.commons.io.IOUtils;
 import org.hippoecm.hst.content.beans.query.HstQuery;
 import org.hippoecm.hst.content.beans.query.builder.HstQueryBuilder;
 import org.hippoecm.hst.content.beans.query.exceptions.QueryException;
@@ -32,6 +36,7 @@ import nl.openweb.hippo.demo.domain.NewsPage;
 import nl.openweb.hippo.exception.SetupTeardownException;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PATHS;
 import static org.junit.Assert.*;
 
@@ -123,6 +128,21 @@ public class BaseHippoTestTest extends BaseHippoTest {
                     "/content/documents/mychannel/news", "hippostd:folder");
         } catch (RepositoryException e) {
             throw new SetupTeardownException(e);
+        }
+    }
+
+    @Test
+    public void printNodeStructureTest() throws IOException {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+            printNodeStructure("/content", new PrintStream(os));
+
+            String expectedValue = IOUtils.toString(
+                    getResourceAsStream("expected-node-structure.txt")
+                    , UTF_8);
+
+            String actualValue = new String(os.toByteArray(), UTF_8);
+            String osIndependentValue = actualValue.replace("\r\n", "\n").replace('\r', '\n');
+            assertEquals(expectedValue, osIndependentValue);
         }
     }
 

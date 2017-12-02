@@ -23,6 +23,7 @@ import javax.jcr.Session;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -148,9 +149,7 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
 
     protected void recalculateHippoPaths(String absolutePath, boolean save) {
         try {
-            if (!absolutePath.startsWith(SLASH)) {
-                throw new IllegalArgumentException("The path is not absolute.");
-            }
+            validateAbsolutePath(absolutePath);
             Node node = rootNode.getNode(absolutePath.substring(1));
             calculateHippoPaths(node, getPathsForNode(node));
             if (save) {
@@ -158,6 +157,48 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
             }
         } catch (RepositoryException e) {
             throw new RuntimeRepositoryException(e);
+        }
+    }
+
+    protected void printNodeStructure() {
+        printNodeStructure("/");
+    }
+
+    protected void printNodeStructure(String absolutePath) {
+        printNodeStructure(absolutePath, System.out);
+    }
+
+    protected void printNodeStructure(String absolutePath, PrintStream printStream) {
+        try {
+            validateAbsolutePath(absolutePath);
+            Node node;
+            if (SLASH.equals(absolutePath)) {
+                node = rootNode;
+            } else {
+                node = rootNode.getNode(absolutePath.substring(1));
+            }
+            printStream.println(node.getName());
+            printSubNodes(printStream, node, "");
+        } catch (RepositoryException e) {
+            throw new RuntimeRepositoryException(e);
+        }
+    }
+
+    private void printSubNodes(PrintStream ps, Node node, String prefix) throws RepositoryException {
+        for (NodeIterator iterator = node.getNodes(); iterator.hasNext(); ) {
+            Node subnode = iterator.nextNode();
+            ps.println(prefix + "   |_" + subnode.getName());
+            if (iterator.hasNext()) {
+                printSubNodes(ps, subnode, prefix + "   |");
+            } else {
+                printSubNodes(ps, subnode, prefix + "    ");
+            }
+        }
+    }
+
+    private void validateAbsolutePath(String absolutePath) {
+        if (!absolutePath.startsWith(SLASH)) {
+            throw new IllegalArgumentException("The path is not absolute.");
         }
     }
 
