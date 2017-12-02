@@ -21,10 +21,14 @@ import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 
+import org.hippoecm.hst.content.beans.query.HstQuery;
+import org.hippoecm.hst.content.beans.query.builder.HstQueryBuilder;
+import org.hippoecm.hst.content.beans.query.exceptions.QueryException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import nl.openweb.hippo.demo.domain.NewsPage;
 import nl.openweb.hippo.exception.SetupTeardownException;
 
 
@@ -79,11 +83,25 @@ public class BaseHippoTestTest extends BaseHippoTest {
 
     @Test
     public void recalculateHippoPathsWithPathTest() throws RepositoryException {
-        recalculateHippoPaths("/content/documents/mychannel");
+        recalculateHippoPaths("/content/documents/mychannel", true);
         Node node = rootNode.getNode("content/documents/mychannel");
         testHippoPaths(node);
         node = rootNode.getNode("content/documents");
         assertFalse(node.hasProperty(HIPPO_PATHS));
+    }
+
+
+    @Test
+    public void recalculateHippoPathsNotSaveTest() throws RepositoryException, QueryException {
+        recalculateHippoPaths(false);
+        Node scope = rootNode.getNode("content/documents/mychannel");
+        HstQuery query = HstQueryBuilder.create(scope)
+                .ofTypes(NewsPage.class)
+                .build();
+
+        assertEquals(0, query.execute().getSize());
+        rootNode.getSession().save();
+        assertEquals(3, query.execute().getSize());
     }
 
     private void testHippoPaths(Node node) throws RepositoryException {

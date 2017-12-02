@@ -139,17 +139,23 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
     }
 
     protected void recalculateHippoPaths() {
-        recalculateHippoPaths("/content");
+        recalculateHippoPaths(true);
     }
 
-    protected void recalculateHippoPaths(String absolutePath) {
+    protected void recalculateHippoPaths(boolean save) {
+        recalculateHippoPaths("/content", save);
+    }
+
+    protected void recalculateHippoPaths(String absolutePath, boolean save) {
         try {
             if (!absolutePath.startsWith(SLASH)) {
                 throw new IllegalArgumentException("The path is not absolute.");
             }
             Node node = rootNode.getNode(absolutePath.substring(1));
             calculateHippoPaths(node, getPathsForNode(node));
-            rootNode.getSession().save();
+            if (save) {
+                rootNode.getSession().save();
+            }
         } catch (RepositoryException e) {
             throw new RuntimeRepositoryException(e);
         }
@@ -165,6 +171,7 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
         return paths;
     }
 
+    @SuppressWarnings("unchecked")
     private void calculateHippoPaths(Node node, LinkedList<String> paths) throws RepositoryException {
         paths.add(0, node.getIdentifier());
         setHippoPath(node, paths);
