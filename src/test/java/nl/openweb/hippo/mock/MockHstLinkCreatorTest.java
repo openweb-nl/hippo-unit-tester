@@ -23,6 +23,7 @@ import java.util.List;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMapItem;
 import org.hippoecm.hst.content.beans.standard.HippoBean;
 import org.hippoecm.hst.core.linking.HstLink;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -124,6 +125,7 @@ public class MockHstLinkCreatorTest extends BaseHippoTest {
         return hippoBean.getNode().getParent();
     }
 
+    @After
     public void teardown() {
         super.teardown();
     }
