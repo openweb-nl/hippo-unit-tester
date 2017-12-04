@@ -22,12 +22,6 @@ import java.util.Map;
 
 import org.hippoecm.hst.configuration.channel.ChannelInfo;
 import org.hippoecm.hst.container.RequestContextProvider;
-import org.hippoecm.hst.content.beans.ObjectBeanManagerException;
-import org.hippoecm.hst.content.beans.manager.ObjectBeanManager;
-import org.hippoecm.hst.content.beans.manager.ObjectConverter;
-import org.hippoecm.hst.content.beans.query.HstQueryManagerImpl;
-import org.hippoecm.hst.content.beans.standard.HippoBean;
-import org.hippoecm.hst.core.component.HstComponentException;
 import org.hippoecm.hst.core.container.ComponentManager;
 import org.hippoecm.hst.core.container.ContainerConfiguration;
 import org.hippoecm.hst.core.linking.HstLinkCreator;
@@ -64,9 +58,6 @@ public class SimpleHippoTest {
     protected MockHstRequest request = new MockHstRequest();
     protected MockHstRequestContext requestContext = new MockHstRequestContext();
     protected MockContainerConfiguration containerConfiguration = new MockContainerConfiguration();
-    protected ObjectConverter objectConverter;
-    protected ObjectBeanManager objectBeanManager;
-    protected HstQueryManagerImpl hstQueryManager;
     protected MockResolvedSiteMapItem resolvedSiteMapItem;
     protected MockResolvedMount resolvedMount;
     protected MockMount mount;
@@ -124,28 +115,6 @@ public class SimpleHippoTest {
     @SuppressWarnings("unchecked")
     protected <T> T getRequestAttribute(String name) {
         return (T) request.getAttribute(name);
-    }
-
-    protected void setContentBean(String path) {
-        requestContext.setContentBean(getHippoBean(path));
-    }
-
-    protected HippoBean getHippoBean(String path) {
-        try {
-            return (HippoBean) requestContext.getObjectBeanManager().getObject(path);
-        } catch (ObjectBeanManagerException e) {
-            throw new HstComponentException(e);
-        }
-    }
-
-    protected void setSiteContentBase(String path) {
-        try {
-            HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
-            requestContext.setSiteContentBasePath(path);
-            requestContext.setSiteContentBaseBean(hippoBean);
-        } catch (ObjectBeanManagerException e) {
-            throw new HstComponentException(e);
-        }
     }
 
     protected void addPublicRequestParameter(String name, String value) {

@@ -28,10 +28,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.hippoecm.hst.component.support.spring.util.MetadataReaderClasspathResourceScanner;
+import org.hippoecm.hst.content.beans.ObjectBeanManagerException;
 import org.hippoecm.hst.content.beans.manager.ObjectBeanManager;
 import org.hippoecm.hst.content.beans.manager.ObjectBeanManagerImpl;
+import org.hippoecm.hst.content.beans.manager.ObjectConverter;
 import org.hippoecm.hst.content.beans.query.HstQueryManager;
 import org.hippoecm.hst.content.beans.query.HstQueryManagerImpl;
+import org.hippoecm.hst.content.beans.standard.HippoBean;
+import org.hippoecm.hst.core.component.HstComponentException;
 import org.hippoecm.hst.core.jcr.RuntimeRepositoryException;
 import org.hippoecm.hst.core.search.HstQueryManagerFactoryImpl;
 import org.hippoecm.hst.site.content.ObjectConverterFactoryBean;
@@ -55,6 +59,9 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
     private static final String SLASH = "/";
     protected Importer importer;
     protected Node rootNode;
+    protected ObjectConverter objectConverter;
+    protected ObjectBeanManager objectBeanManager;
+    protected HstQueryManager hstQueryManager;
 
     @Override
     public void setup() {
@@ -66,6 +73,28 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
             setQueryManager();
         } catch (Exception e) {
             throw new SetupTeardownException(e);
+        }
+    }
+
+    protected HippoBean getHippoBean(String path) {
+        try {
+            return (HippoBean) requestContext.getObjectBeanManager().getObject(path);
+        } catch (ObjectBeanManagerException e) {
+            throw new HstComponentException(e);
+        }
+    }
+
+    protected void setContentBean(String path) {
+        requestContext.setContentBean(getHippoBean(path));
+    }
+
+    protected void setSiteContentBase(String path) {
+        try {
+            HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
+            requestContext.setSiteContentBasePath(path);
+            requestContext.setSiteContentBaseBean(hippoBean);
+        } catch (ObjectBeanManagerException e) {
+            throw new HstComponentException(e);
         }
     }
 
