@@ -41,4 +41,8 @@ public class NewsPage extends HippoDocument {
         return getProperty("ns:browserTitle");
     }
 
+    public NewsPage getRelatedNews() {
+        return getLinkedBean("ns:relatedNews", NewsPage.class);
+    }
+
 }
