@@ -146,6 +146,12 @@ public class BaseHippoTestTest extends BaseHippoTest {
         }
     }
 
+    @Test
+    public void hippoMirrorTest() {
+        NewsPage hippoBean = (NewsPage) getHippoBean("/content/documents/mychannel/news/news3");
+        assertEquals("news2", hippoBean.getRelatedNews().getName());
+    }
+
     @After
     public void teardown() {
         super.teardown();

@@ -318,6 +318,14 @@
           dignissim. scelerisque faucibus ex blandit et.
         </sv:value>
       </sv:property>
+      <sv:node sv:name="ns:relatedNews">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>hippo:mirror</sv:value>
+        </sv:property>
+        <sv:property sv:name="hippo:docbase" sv:type="String">
+          <sv:value>23796843-e214-4ab3-bcc3-971e34d6a70f</sv:value>
+        </sv:property>
+      </sv:node>
       <sv:property sv:name="ns:genericNewsItem" sv:type="Boolean">
         <sv:value>true</sv:value>
       </sv:property>
