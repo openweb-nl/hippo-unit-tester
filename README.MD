@@ -28,7 +28,7 @@ In order to enable developers to focus on designing their unit tests scenarios i
 ```
 
 ## Usage
-Within the tester there is a class to extend from:
+Within the package there are classes to extend from:
 
 * BaseHippoTest
 * SimpleHippoTest
