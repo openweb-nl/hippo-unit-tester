@@ -7,29 +7,95 @@ In order to enable developers to focus on designing their unit tests scenarios i
 ## Installation
 
 1. Add dependency to pom.xml
-```xml   
-<dependency>
-  <groupId>nl.openweb.hippo</groupId>
-  <artifactId>hippo-unit-tester</artifactId>
-  <version>2.1.2</version>
-  <scope>test</scope>
-</dependency>
+```xml
+<dependencyManagement>
+    <dependency>
+        <groupId>nl.openweb.hippo</groupId>
+        <artifactId>hippo-unit-tester</artifactId>
+        <version>2.1.2</version>
+        <scope>test</scope>
+    </dependency>
+    ...
+</dependencyManagement>
 ```
 
 2. Add dependency to site pom.xml.
 ```xml
 <dependency>
-  <groupId>nl.openweb.hippo</groupId>
-  <artifactId>hippo-unit-tester</artifactId>
+    <groupId>nl.openweb.hippo</groupId>
+    <artifactId>hippo-unit-tester</artifactId>
 </dependency>
 ```
 
 ## Usage
 
+### Importer
+The importer works with JSON or XML.
+It will import the file at given location.
+
+#### XML
+
+```xml
+<sv:node sv:name="news1">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>hippo:handle</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+        <sv:value>mix:referenceable</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>3119bd98-9361-4b78-a81b-ad8228bc8bfb</sv:value>
+    </sv:property>
+    <sv:node sv:name="news1">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>ns:NewsPage</sv:value>
+        </sv:property>
+        ...
+    </sv:node>
+</sv:node>
+```
+
+#### JSON
+
+```json
+
+```
+
+### Debug
+
 ```java
-registerNodeType("ns:custom"); // When you want to create you own namespace
+/**
+* prints out the whole JCR structure
+*/
+printNodeStructure();
+
+/**
+* prints out the JCR structure from given path
+*/
+printNodeStructure("/path");
+```
+
+
+### Explain
+
+```java
+/**
+* When you want to create you own namespace
+*/
+registerNodeType("ns:custom");
 ```
 
 ```java
-request.setLocale(new Locale("nl_NL")); //eForms needs a Local to be set
+/**
+* eForms needs a Local to be set
+*/
+request.setLocale(new Locale("nl_NL"));
+````
+
+```java
+/**
+ * From the given file create a node containing the content of imported file
+ * Location should contain the path the node should be created not where you want to import the file
+**/
+importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/demo/news.xml"), "/content/documents/mychannel/news", "hippostd:folder");
 ````
