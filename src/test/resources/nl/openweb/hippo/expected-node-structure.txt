@@ -11,6 +11,7 @@ content
    |           |       |_ns:headerImage
    |           |_news3
    |           |   |_news3
+   |           |       |_ns:relatedNews
    |           |       |_ns:headerImage
    |           |_another-type
    |               |_another-type
