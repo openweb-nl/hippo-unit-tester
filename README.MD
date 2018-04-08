@@ -103,3 +103,7 @@ request.setLocale(new Locale("nl_NL"));
 **/
 importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/demo/news.xml"), "/content/documents/mychannel/news", "hippostd:folder");
 ````
+
+### Demo
+
+One of the best ways to learn about how to use this library is by looking at an [example](https://github.com/openweb-nl/hippo-unit-tester/blob/master/src/test/java/nl/openweb/hippo/demo/EssentialsListComponentTest.java)
