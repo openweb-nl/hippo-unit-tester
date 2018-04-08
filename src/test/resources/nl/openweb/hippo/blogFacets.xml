@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ~ Copyright 2018 Open Web IT B.V. (https://www.openweb.nl/)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<sv:node xmlns:sv="http://www.jcp.org/jcr/sv/1.0" sv:name="blogFacets">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>hippofacnav:facetnavigation</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippo:count" sv:type="Long">
+    <sv:value>2</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippo:docbase" sv:type="String">
+    <sv:value>caf6c0c2-7be2-4f43-9248-f2232d6df1fb</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippofacnav:facetnodenames" sv:type="String" sv:multiple="true">
+    <sv:value>Authors</sv:value>
+    <sv:value>Categories</sv:value>
+    <sv:value>Tags</sv:value>
+    <sv:value>Date</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippofacnav:facets" sv:type="String" sv:multiple="true">
+    <sv:value>ns:authornames</sv:value>
+    <sv:value>ns:categories</sv:value>
+    <sv:value>hippostd:tags</sv:value>
+    <sv:value>ns:publicationdate$[
+                {name:'Last 7 days',resolution:'day', begin:-6, end:1},
+                {name:'Last month',resolution:'day', begin:-30, end:1},
+                {name:'Last 3 months',resolution:'day', begin:-91, end:1},
+                {name:'Last 6 months',resolution:'day', begin:-182, end:1},
+                {name:'Last year',resolution:'day', begin:-365, end:1}
+                ]</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippofacnav:filters" sv:type="String" sv:multiple="true">
+    <sv:value>jcr:primaryType = ns:blogpost</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippofacnav:limit" sv:type="Long">
+    <sv:value>100</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippofacnav:sortby" sv:type="String" sv:multiple="true">
+    <sv:value>ns:publicationdate</sv:value>
+  </sv:property>
+  <sv:property sv:name="hippofacnav:sortorder" sv:type="String" sv:multiple="true">
+    <sv:value>descending</sv:value>
+  </sv:property>
+</sv:node>
