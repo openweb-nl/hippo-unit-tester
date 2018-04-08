@@ -12,7 +12,7 @@ In order to enable developers to focus on designing their unit tests scenarios i
     <dependency>
         <groupId>nl.openweb.hippo</groupId>
         <artifactId>hippo-unit-tester</artifactId>
-        <version>2.1.2</version>
+        <version>2.2.0</version>
         <scope>test</scope>
     </dependency>
     ...
