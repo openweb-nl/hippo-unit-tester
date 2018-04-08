@@ -21,6 +21,7 @@ import javax.jcr.RepositoryException;
 import org.hippoecm.hst.content.beans.standard.HippoBean;
 import org.hippoecm.hst.content.beans.standard.HippoDocument;
 import org.hippoecm.hst.content.beans.standard.facetnavigation.HippoFacetNavigation;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,5 +73,10 @@ public class HippoRepositrySpecificTests extends BaseHippoTest {
                 "classpath*:com/onehippo/**/*.class, " +
                 "classpath*:org/onehippo/cms7/hst/beans/**/*.class, " +
                 "classpath*:nl/openweb/hippo/demo/domain/**/*.class";
+    }
+
+    @After
+    public void teardown() {
+        super.teardown();
     }
 }
