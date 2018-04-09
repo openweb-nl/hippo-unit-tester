@@ -21,10 +21,7 @@ import javax.jcr.RepositoryException;
 import org.hippoecm.hst.content.beans.standard.HippoBean;
 import org.hippoecm.hst.content.beans.standard.HippoDocument;
 import org.hippoecm.hst.content.beans.standard.facetnavigation.HippoFacetNavigation;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * @author Ebrahim Aharpour
@@ -42,29 +39,34 @@ public class HippoRepositrySpecificTests extends BaseHippoTest {
         importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/blog.xml"),
                 "/content/documents/mychannel/blog", "hippostd:folder");
         importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/blogFacets.xml"),
-                "/content/documents/mychannel/blogFacets", "ns:facetnavigation");
+                "/content/documents/mychannel/blogFacets", "hippostd:folder");
         setSiteContentBase("/content/documents/mychannel");
+
+        recalculateHippoPaths();
     }
 
     @Test
     public void canonicalUUID() {
-        HippoBean blogFolder = getHippoBean("/content/documents/mychannel/blog");
+        HippoBean blogFolder = requestContext.getSiteContentBaseBean().getBean("blog");
         Assert.assertEquals("caf6c0c2-7be2-4f43-9248-f2232d6df1fb", blogFolder.getCanonicalUUID());
-        HippoDocument firstBlogPost = (HippoDocument) getHippoBean("/content/documents/mychannel/blog/2018/04/first-blog-post");
+        HippoDocument firstBlogPost = requestContext.getSiteContentBaseBean().getBean("blog/2018/04/first-blog-post");
         Assert.assertEquals("1ba60d37-3b6c-4d3b-be5a-5477d1f06f54", firstBlogPost.getCanonicalUUID());
         Assert.assertEquals("2cb6ced5-4003-4c3f-af3d-fe348e8c7735", firstBlogPost.getCanonicalHandleUUID());
     }
 
     @Test
     public void canonicalHandlePath() {
-        HippoDocument firstBlogPost = (HippoDocument) getHippoBean("/content/documents/mychannel/blog/2018/04/first-blog-post");
+        HippoDocument firstBlogPost = requestContext.getSiteContentBaseBean().getBean("blog/2018/04/first-blog-post");
         Assert.assertEquals("/content/documents/mychannel/blog/2018/04/first-blog-post/first-blog-post", firstBlogPost.getCanonicalPath());
     }
 
     @Test
+    @Ignore
     public void facetedNavigation() {
-        HippoFacetNavigation facet = (HippoFacetNavigation) getHippoBean("/content/documents/mychannel/blogFacets");
+        HippoFacetNavigation facet = requestContext.getSiteContentBaseBean().getBean("blogFacets");
         Assert.assertEquals((Long) 2L, facet.getCount());
+        Assert.assertEquals(2, facet.getDocumentSize());
+        Assert.assertNotNull(facet.getResultSet());
     }
 
     @Override
