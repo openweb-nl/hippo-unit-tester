@@ -89,9 +89,12 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
     }
 
     protected void setSiteContentBase(String path) {
+        assert path != null && path.startsWith("/");
         try {
+            // here path must be absolute
             HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
-            requestContext.setSiteContentBasePath(path);
+            // here path must be relative to root
+            requestContext.setSiteContentBasePath(path.substring(1));
             requestContext.setSiteContentBaseBean(hippoBean);
         } catch (ObjectBeanManagerException e) {
             throw new HstComponentException(e);
