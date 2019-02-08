@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 /**
+ * Mock for the ComponentManager. Use {@code addComponent(name, component)} to add Components to the manager.
  * @author Ivor Boers
  */
 @SuppressWarnings("unchecked")
@@ -117,6 +118,12 @@ public class MockComponentManager implements ComponentManager {
     public void close() {
     }
 
+    /**
+     * Add a component to the components Map
+     * @param name the name
+     * @param component the component
+     * @param <T> can be any type
+     */
     public <T> void addComponent(String name, T component) {
         this.components.put(name, component);
     }
