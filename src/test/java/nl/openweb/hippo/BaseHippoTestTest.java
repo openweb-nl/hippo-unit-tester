@@ -28,7 +28,9 @@ import org.apache.commons.io.IOUtils;
 import org.hippoecm.hst.content.beans.query.HstQuery;
 import org.hippoecm.hst.content.beans.query.builder.HstQueryBuilder;
 import org.hippoecm.hst.content.beans.query.exceptions.QueryException;
+import org.hippoecm.hst.content.beans.standard.HippoBean;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -141,15 +143,40 @@ public class BaseHippoTestTest extends BaseHippoTest {
                     , UTF_8);
 
             String actualValue = new String(os.toByteArray(), UTF_8);
-            String osIndependentValue = actualValue.replace("\r\n", "\n").replace('\r', '\n');
-            assertEquals(expectedValue, osIndependentValue);
+
+            assertEquals(getOsIndependantValue(expectedValue), getOsIndependantValue(actualValue));
         }
+    }
+
+    private String getOsIndependantValue(String value) {
+        return value.replace("\r\n", "\n").replace('\r', '\n');
     }
 
     @Test
     public void hippoMirrorTest() {
         NewsPage hippoBean = (NewsPage) getHippoBean("/content/documents/mychannel/news/news3");
         assertEquals("news2", hippoBean.getRelatedNews().getName());
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setSiteContentBaseTestNull() {
+        setSiteContentBase(null);
+        Assert.fail("Expected a IllegalArgumentException");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setSiteContentBaseTestRelative() {
+        setSiteContentBase("a/b");
+        Assert.fail("Expected a IllegalArgumentException");
+    }
+
+    @Test
+    public void setSiteContentBaseTestAbsolute() {
+        setSiteContentBase("/content/documents/mychannel/news/news3");
+        Assert.assertEquals("content/documents/mychannel/news/news3", requestContext.getSiteContentBasePath());
+        HippoBean siteContentBaseBean = requestContext.getSiteContentBaseBean();
+        Assert.assertEquals("news3", siteContentBaseBean.getName());
     }
 
     @After
