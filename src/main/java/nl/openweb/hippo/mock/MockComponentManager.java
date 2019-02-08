@@ -115,7 +115,7 @@ public class MockComponentManager implements ComponentManager {
     }
 
     public <T> Map<String, T> getComponentsOfType(Class<T> requiredType, String... addonModuleNames) {
-        return null;
+        return getComponentsOfType(requiredType);
     }
 
     public void publishEvent(EventObject event) {

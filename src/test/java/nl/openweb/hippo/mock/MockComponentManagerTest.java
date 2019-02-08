@@ -69,8 +69,17 @@ public class MockComponentManagerTest {
 
         Map<String, String> componentsOfType = componentManager.getComponentsOfType(String.class);
         Assert.assertEquals(2, componentsOfType.size());
+    }
 
+    @Test
+    public void getComponentsOfTypeTestWithModuleName() {
+        String component1 = "component1";
+        String component2 = "component2";
+        componentManager.addComponent("test1", component1);
+        componentManager.addComponent("test2", component2);
 
+        Map<String, String> componentsOfType = componentManager.getComponentsOfType(String.class, "foo");
+        Assert.assertEquals(2, componentsOfType.size());
     }
 
     @Test
