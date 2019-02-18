@@ -94,11 +94,10 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
      * @param path absolute path. It must not be null or empty and it must start with a /
      */
     protected void setSiteContentBase(String path) {
-        if (StringUtils.isBlank(path) || !path.startsWith("/")) {
-            throw new IllegalArgumentException("Parameter path must be a String that starts with /");
-        }
         try {
-            // here it must be absolute
+            if (StringUtils.isBlank(path) || !path.startsWith("/")) {
+                throw new IllegalArgumentException("Parameter path must be a String that starts with /");
+            }
             HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
             // here it must be relative to root
             requestContext.setSiteContentBasePath(path.substring(1));
