@@ -75,6 +75,9 @@ public abstract class BaseHippoTest extends AbstractRepoTest {
     @Override
     protected JcrImporter getImporter(String fileFormat) {
         JcrImporter importer;
+        if (fileFormat == null) {
+            throw new IllegalArgumentException("fileFormat may not be null");
+        }
         switch (fileFormat) {
             case JsonImporter.FORMAT:
                 importer = new JsonImporter(getRootNode());

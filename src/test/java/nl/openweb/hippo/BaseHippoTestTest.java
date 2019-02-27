@@ -24,6 +24,7 @@ import org.hippoecm.hst.content.beans.query.HstQuery;
 import org.hippoecm.hst.content.beans.query.builder.HstQueryBuilder;
 import org.hippoecm.hst.content.beans.query.exceptions.QueryException;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,6 +48,33 @@ public class BaseHippoTestTest extends BaseHippoTest {
 
 
     private static final String COMPONENT_NAME = "myComponent";
+
+
+    @Test
+    public void testGetFileFormatByPathIsIgnoringCase() {
+        Assert.assertEquals("bar", getFileFormatByPath("foo.BAR"));
+        Assert.assertEquals("json", getFileFormatByPath("foo.Json"));
+        Assert.assertEquals("json", getFileFormatByPath("foo.JSON"));
+        Assert.assertEquals("json", getFileFormatByPath("foo.json"));
+        Assert.assertEquals("xml", getFileFormatByPath("foo.xml"));
+        Assert.assertEquals("xml", getFileFormatByPath("foo.XML"));
+    }
+    @Test
+    public void testGetFileFormatByPathHandlesFileWithoutExtension() {
+        Assert.assertNull(getFileFormatByPath(null));
+        Assert.assertNull(getFileFormatByPath("foo"));
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetImporterShouldThrowExceptionForUnknownFormat() {
+        getImporter("foo");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetImporterShouldThrowExceptionForNullFormat() {
+        getImporter(null);
+    }
 
     @Test
     public void testHstRequest() {
