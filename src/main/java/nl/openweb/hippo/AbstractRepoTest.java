@@ -27,6 +27,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.apache.commons.lang.StringUtils;
 import org.hippoecm.hst.component.support.spring.util.MetadataReaderClasspathResourceScanner;
 import org.hippoecm.hst.content.beans.ObjectBeanManagerException;
 import org.hippoecm.hst.content.beans.manager.ObjectBeanManager;
@@ -88,10 +89,18 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
         requestContext.setContentBean(getHippoBean(path));
     }
 
+    /**
+     * Set the SiteContentBasePath and the siteContentBaseBean on HstRequestContext
+     * @param path absolute path. It must not be null or empty and it must start with a /
+     */
     protected void setSiteContentBase(String path) {
         try {
+            if (StringUtils.isBlank(path) || !path.startsWith("/")) {
+                throw new IllegalArgumentException("Parameter path must be a String that starts with /");
+            }
             HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
-            requestContext.setSiteContentBasePath(path);
+            // here it must be relative to root
+            requestContext.setSiteContentBasePath(path.substring(1));
             requestContext.setSiteContentBaseBean(hippoBean);
         } catch (ObjectBeanManagerException e) {
             throw new HstComponentException(e);
