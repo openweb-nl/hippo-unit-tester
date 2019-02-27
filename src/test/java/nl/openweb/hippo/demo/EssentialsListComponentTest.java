@@ -18,6 +18,7 @@ package nl.openweb.hippo.demo;
 import javax.jcr.RepositoryException;
 import java.util.List;
 
+import nl.openweb.jcr.importer.XmlImporter;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,7 +52,7 @@ public class EssentialsListComponentTest extends BaseHippoTest {
         try {
             super.setup();
             registerNodeType("ns:NewsPage", "ns:AnotherType");
-            importer.createNodesFromXml(getResourceAsStream("news.xml"),
+            getImporter(XmlImporter.FORMAT).createNodes(getResourceAsStream("news.xml"),
                     "/content/documents/mychannel/news", "hippostd:folder");
             recalculateHippoPaths();
             setSiteContentBase("/content/documents/mychannel");

@@ -16,14 +16,9 @@
 
 package nl.openweb.hippo;
 
-import javax.jcr.Node;
-import javax.jcr.Property;
-import javax.jcr.RepositoryException;
-import javax.jcr.Value;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-
+import nl.openweb.hippo.demo.domain.NewsPage;
+import nl.openweb.hippo.exception.SetupTeardownException;
+import nl.openweb.jcr.importer.XmlImporter;
 import org.apache.commons.io.IOUtils;
 import org.hippoecm.hst.content.beans.query.HstQuery;
 import org.hippoecm.hst.content.beans.query.builder.HstQueryBuilder;
@@ -32,9 +27,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import nl.openweb.hippo.demo.domain.NewsPage;
-import nl.openweb.hippo.exception.SetupTeardownException;
-
+import javax.jcr.Node;
+import javax.jcr.Property;
+import javax.jcr.RepositoryException;
+import javax.jcr.Value;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PATHS;
@@ -124,7 +123,7 @@ public class BaseHippoTestTest extends BaseHippoTest {
         try {
             super.setup();
             registerNodeType("ns:NewsPage", "ns:AnotherType");
-            importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/demo/news.xml"),
+            getImporter(XmlImporter.FORMAT).createNodes(getResourceAsStream("/nl/openweb/hippo/demo/news.xml"),
                     "/content/documents/mychannel/news", "hippostd:folder");
         } catch (RepositoryException e) {
             throw new SetupTeardownException(e);
@@ -142,7 +141,8 @@ public class BaseHippoTestTest extends BaseHippoTest {
 
             String actualValue = new String(os.toByteArray(), UTF_8);
             String osIndependentValue = actualValue.replace("\r\n", "\n").replace('\r', '\n');
-            assertEquals(expectedValue, osIndependentValue);
+            String osIndependentExpectedValue = expectedValue.replace("\r\n", "\n").replace('\r', '\n');
+            assertEquals(osIndependentExpectedValue, osIndependentValue);
         }
     }
 

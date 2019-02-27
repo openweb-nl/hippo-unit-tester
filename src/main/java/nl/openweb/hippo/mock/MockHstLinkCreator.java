@@ -100,6 +100,11 @@ public class MockHstLinkCreator implements HstLinkCreator {
     }
 
     @Override
+    public HstLink create(Node node, Mount mount, boolean crossMount) {
+        return getMockLink(node);
+    }
+
+    @Override
     public HstLink create(Node node, Mount mount, HstSiteMapItem preferredItem, boolean fallback) {
         return getMockLink(node);
     }

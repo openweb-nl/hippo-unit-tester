@@ -16,12 +16,14 @@
 
 package nl.openweb.hippo;
 
-import javax.jcr.RepositoryException;
-
+import nl.openweb.jcr.importer.JcrImporter;
+import nl.openweb.jcr.importer.XmlImporter;
 import org.hippoecm.hst.content.beans.standard.HippoBean;
 import org.hippoecm.hst.content.beans.standard.HippoDocument;
 import org.hippoecm.hst.content.beans.standard.facetnavigation.HippoFacetNavigation;
 import org.junit.*;
+
+import javax.jcr.RepositoryException;
 
 /**
  * @author Ebrahim Aharpour
@@ -36,9 +38,10 @@ public class HippoRepositrySpecificTests extends BaseHippoTest {
         registerNodeType("ns:basedocument", "hippo:document");
         registerNodeType("ns:author", "ns:basedocument");
         registerNodeType("ns:blogpost", "ns:basedocument");
-        importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/blog.xml"),
+        JcrImporter importer = getImporter(XmlImporter.FORMAT);
+        importer.createNodes(getResourceAsStream("/nl/openweb/hippo/blog.xml"),
                 "/content/documents/mychannel/blog", "hippostd:folder");
-        importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/blogFacets.xml"),
+        importer.createNodes(getResourceAsStream("/nl/openweb/hippo/blogFacets.xml"),
                 "/content/documents/mychannel/blogFacets", "hippostd:folder");
         setSiteContentBase("/content/documents/mychannel");
 

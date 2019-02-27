@@ -16,17 +16,10 @@
 
 package nl.openweb.hippo;
 
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.LinkedList;
-
+import nl.openweb.hippo.exception.SetupTeardownException;
+import nl.openweb.jcr.importer.JcrImporter;
+import nl.openweb.jcr.importer.JsonImporter;
+import nl.openweb.jcr.utils.NodeTypeUtils;
 import org.hippoecm.hst.component.support.spring.util.MetadataReaderClasspathResourceScanner;
 import org.hippoecm.hst.content.beans.ObjectBeanManagerException;
 import org.hippoecm.hst.content.beans.manager.ObjectBeanManager;
@@ -43,10 +36,14 @@ import org.hippoecm.hst.util.PathUtils;
 import org.hippoecm.repository.util.DateTools;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import nl.openweb.hippo.exception.SetupTeardownException;
-import nl.openweb.jcr.Importer;
-import nl.openweb.jcr.utils.NodeTypeUtils;
-
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PATHS;
 
@@ -57,7 +54,6 @@ import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PATHS;
 public abstract class AbstractRepoTest extends SimpleHippoTest {
 
     private static final String SLASH = "/";
-    protected Importer importer;
     protected Node rootNode;
     protected ObjectConverter objectConverter;
     protected ObjectBeanManager objectBeanManager;
@@ -67,8 +63,7 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
     public void setup() {
         super.setup();
         try {
-            importer = getImporter();
-            importNodeStructure(importer);
+            importNodeStructure();
             setObjectConverter();
             setQueryManager();
         } catch (Exception e) {
@@ -98,20 +93,31 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
         }
     }
 
-    protected abstract Importer getImporter();
+    protected String getFileFormatByPath(String path) {
+        if (path != null && path.contains(".")) {
+            String fileExtension = path.substring(path.lastIndexOf(".") + 1).toLowerCase();
+            return fileExtension;
+        }
+        return null;
+    }
+
+    abstract JcrImporter getImporter(String fileFormat);
 
     protected abstract String getAnnotatedClassesResourcePath();
 
-    private void importNodeStructure(Importer importer) throws IOException, RepositoryException, JAXBException {
+    private void importNodeStructure() throws RepositoryException {
         String pathToResource = getPathToTestResource();
         if (pathToResource != null) {
-            if (pathToResource.endsWith(".xml")) {
-                this.rootNode = importer.createNodesFromXml(getResourceAsStream(pathToResource));
+            String fileFormat = getFileFormatByPath(pathToResource);
+            JcrImporter importer = getImporter(fileFormat);
+            if (importer != null) {
+                this.rootNode = importer.createNodes(getResourceAsStream(pathToResource));
             } else {
-                this.rootNode = importer.createNodesFromJson(getResourceAsStream(pathToResource));
+                throw new IllegalStateException("Failed to get an importer for fileFormat " + fileFormat);
             }
         } else {
-            this.rootNode = importer.createNodesFromJson("{}");
+            JcrImporter importer = getImporter(JsonImporter.FORMAT);
+            this.rootNode = importer.createNodes("{}");
         }
         requestContext.setSession(this.rootNode.getSession());
     }

@@ -20,6 +20,7 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import java.util.List;
 
+import nl.openweb.jcr.importer.XmlImporter;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMapItem;
 import org.hippoecm.hst.content.beans.standard.HippoBean;
 import org.hippoecm.hst.core.linking.HstLink;
@@ -44,7 +45,7 @@ public class MockHstLinkCreatorTest extends BaseHippoTest {
     @Before
     public void setup() {
         super.setup();
-        importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/demo/news.xml"),
+        getImporter(XmlImporter.FORMAT).createNodes(getResourceAsStream("/nl/openweb/hippo/demo/news.xml"),
                 "/content/documents/mychannel/news", "hippostd:folder");
 
     }
