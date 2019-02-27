@@ -16,10 +16,16 @@
 
 package nl.openweb.hippo;
 
-import nl.openweb.hippo.exception.SetupTeardownException;
-import nl.openweb.jcr.importer.JcrImporter;
-import nl.openweb.jcr.importer.JsonImporter;
-import nl.openweb.jcr.utils.NodeTypeUtils;
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.LinkedList;
+
+import org.apache.commons.lang.StringUtils;
 import org.hippoecm.hst.component.support.spring.util.MetadataReaderClasspathResourceScanner;
 import org.hippoecm.hst.content.beans.ObjectBeanManagerException;
 import org.hippoecm.hst.content.beans.manager.ObjectBeanManager;
@@ -36,14 +42,11 @@ import org.hippoecm.hst.util.PathUtils;
 import org.hippoecm.repository.util.DateTools;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.LinkedList;
+import nl.openweb.hippo.exception.SetupTeardownException;
+import nl.openweb.jcr.importer.JcrImporter;
+import nl.openweb.jcr.importer.JsonImporter;
+import nl.openweb.jcr.utils.NodeTypeUtils;
+
 
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PATHS;
 
@@ -83,10 +86,18 @@ public abstract class AbstractRepoTest extends SimpleHippoTest {
         requestContext.setContentBean(getHippoBean(path));
     }
 
+    /**
+     * Set the SiteContentBasePath and the siteContentBaseBean on HstRequestContext
+     * @param path absolute path. It must not be null or empty and it must start with a /
+     */
     protected void setSiteContentBase(String path) {
         try {
+            if (StringUtils.isBlank(path) || !path.startsWith("/")) {
+                throw new IllegalArgumentException("Parameter path must be a String that starts with /");
+            }
             HippoBean hippoBean = (HippoBean) requestContext.getObjectBeanManager().getObject(path);
-            requestContext.setSiteContentBasePath(path);
+            // here it must be relative to root
+            requestContext.setSiteContentBasePath(path.substring(1));
             requestContext.setSiteContentBaseBean(hippoBean);
         } catch (ObjectBeanManagerException e) {
             throw new HstComponentException(e);
