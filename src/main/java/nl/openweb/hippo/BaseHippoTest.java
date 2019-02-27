@@ -15,14 +15,15 @@
  */
 package nl.openweb.hippo;
 
-import javax.jcr.Credentials;
-import javax.jcr.Repository;
-import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
-
 import nl.openweb.hippo.exception.SetupTeardownException;
-import nl.openweb.jcr.Importer;
+import nl.openweb.hippo.importer.YamlImporter;
 import nl.openweb.jcr.InMemoryJcrRepository;
+import nl.openweb.jcr.importer.JcrImporter;
+import nl.openweb.jcr.importer.JsonImporter;
+import nl.openweb.jcr.importer.XmlImporter;
+
+import javax.jcr.*;
+import java.io.IOException;
 
 /**
  * @author Ebrahim Aharpour
@@ -33,8 +34,11 @@ public abstract class BaseHippoTest extends AbstractRepoTest {
     public static final SimpleCredentials ADMIN = new SimpleCredentials("admin", "admin".toCharArray());
     private InMemoryJcrRepository repository;
 
+
     @Override
     public void setup() {
+        repository = createRepository();
+        rootNode = getRootNode();
         super.setup();
         componentManager.addComponent(Repository.class.getName(), repository);
         componentManager.addComponent(Credentials.class.getName() + ".hstconfigreader", getWritableCredentials());
@@ -44,25 +48,62 @@ public abstract class BaseHippoTest extends AbstractRepoTest {
         componentManager.addComponent(Credentials.class.getName() + ".writable", getWritableCredentials());
     }
 
+    protected InMemoryJcrRepository createRepository() {
+        try {
+            return new InMemoryJcrRepository();
+        } catch (RepositoryException| IOException e) {
+            throw new SetupTeardownException(e);
+        }
+    }
+
+    private Node getRootNode() {
+            try {
+                if (repository == null) {
+                    repository = createRepository();
+                }
+                Session session = repository.login(ADMIN);
+                return  session.getRootNode();
+            } catch (Exception e) {
+                throw new SetupTeardownException(e);
+            }
+    }
+
     protected Credentials getWritableCredentials() {
         return ADMIN;
     }
 
     @Override
-    protected Importer getImporter() {
-        try {
-            repository = new InMemoryJcrRepository();
+    protected JcrImporter getImporter(String fileFormat) {
+        JcrImporter importer;
+        if (fileFormat == null) {
+            throw new IllegalArgumentException("fileFormat may not be null");
+        }
+        switch (fileFormat) {
+            case JsonImporter.FORMAT:
+                importer = new JsonImporter(getRootNode());
+                break;
+            case XmlImporter.FORMAT:
+                importer = new XmlImporter(getRootNode());
+                break;
+            case YamlImporter.FORMAT:
+                importer = new YamlImporter(getRootNode());
+                break;
+            default:
+                throw new IllegalArgumentException("No importer for fileFormat: " + fileFormat);
+        }
+        importer.addUnknownTypes(true)
+                .saveSession(true)
+                .addUuid(true);
 
-            return new Importer.Builder(() -> {
-                Session session = repository.login(ADMIN);
-                return session.getRootNode();
-            })
-                    .addUnknownTypes(true)
-                    .saveSession(true)
-                    .addUuid(true)
-                    .build();
-        } catch (Exception e) {
-            throw new SetupTeardownException(e);
+        return importer;
+    }
+
+    protected void importResources(String path, String intermediateNodeType, String... pathsToResources) {
+        if (pathsToResources != null) {
+            for (String resource : pathsToResources) {
+                String format = getFileFormatByPath(resource);
+                getImporter(format).createNodes(getResourceAsStream(resource), path, intermediateNodeType);
+            }
         }
     }
 

@@ -20,12 +20,12 @@
   <parent>
     <groupId>org.onehippo.cms7</groupId>
     <artifactId>hippo-cms7-release</artifactId>
-    <version>11.2.1</version>
+    <version>12.5.0</version>
   </parent>
 
   <groupId>nl.openweb.hippo</groupId>
   <artifactId>hippo-unit-tester</artifactId>
-  <version>2.2.1-SNAPSHOT</version>
+  <version>2.3.0-SNAPSHOT</version>
 
   <name>Hippo Unit Tester</name>
   <description>Hippo Unit Tester is framework aimed at simplifying unit testing of Hippo CMS</description>
@@ -49,6 +49,8 @@
   </developers>
 
   <properties>
+    <jcr-mocking-tool.version>1.4.0-SNAPSHOT</jcr-mocking-tool.version>
+
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
@@ -95,7 +97,7 @@
     <dependency>
       <groupId>nl.openweb.jcr</groupId>
       <artifactId>jcr-mocking-tool</artifactId>
-      <version>1.3.3</version>
+      <version>${jcr-mocking-tool.version}</version>
     </dependency>
 
     <dependency>

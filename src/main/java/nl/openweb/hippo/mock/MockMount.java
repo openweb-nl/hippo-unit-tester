@@ -15,9 +15,6 @@
  */
 package nl.openweb.hippo.mock;
 
-import java.util.*;
-
-import org.hippoecm.hst.configuration.channel.Channel;
 import org.hippoecm.hst.configuration.channel.ChannelInfo;
 import org.hippoecm.hst.configuration.hosting.Mount;
 import org.hippoecm.hst.configuration.hosting.MutableMount;
@@ -25,7 +22,9 @@ import org.hippoecm.hst.configuration.hosting.VirtualHost;
 import org.hippoecm.hst.configuration.internal.ContextualizableMount;
 import org.hippoecm.hst.configuration.site.HstSite;
 import org.hippoecm.hst.core.request.HstSiteMapMatcher;
+import org.onehippo.cms7.services.hst.Channel;
 
+import java.util.*;
 /**
  * @author Ebrahim Aharpour
  * @since 6/19/2017
@@ -85,6 +84,10 @@ public class MockMount implements ContextualizableMount {
     private List<String> cmsLocations;
     private String type;
     private List<String> types;
+    private boolean noChannelInfo;
+    private boolean finalPipeline;
+    private boolean explicit;
+    private Map<String, String> responseHeaders = new HashMap<>();
 
     @Override
     public VirtualHost getVirtualHost() {
@@ -259,6 +262,16 @@ public class MockMount implements ContextualizableMount {
     }
 
     @Override
+    public Map<String, String> getResponseHeaders() {
+        return responseHeaders;
+    }
+
+    @Override
+    public boolean isExplicit() {
+        return explicit;
+    }
+
+    @Override
     public Channel getPreviewChannel() {
         return previewChannel;
     }
@@ -283,6 +296,12 @@ public class MockMount implements ContextualizableMount {
 
     public void setMountPoint(String mountPoint) {
         this.mountPoint = mountPoint;
+    }
+
+
+    @Override
+    public boolean hasNoChannelInfo() {
+        return noChannelInfo;
     }
 
     @Override
@@ -562,16 +581,19 @@ public class MockMount implements ContextualizableMount {
         this.channelPath = channelPath;
     }
 
-    @Override
     public void setChannelInfo(ChannelInfo info, ChannelInfo previewInfo) {
         this.channelInfo = info;
         this.previewChannelInfo = previewInfo;
     }
 
-    @Override
     public void setChannel(Channel channel, Channel previewChannel) {
         this.channel = channel;
         this.previewChannel = previewChannel;
+    }
+
+    @Override
+    public boolean isFinalPipeline() {
+        return finalPipeline;
     }
 
     @Override
@@ -609,5 +631,21 @@ public class MockMount implements ContextualizableMount {
     @Override
     public boolean isOfType(String type) {
         return types != null ? types.contains(type) : false;
+    }
+
+    public void setNoChannelInfo(final boolean noChannelInfo) {
+        this.noChannelInfo = noChannelInfo;
+    }
+
+    public void setFinalPipeline(final boolean finalPipeline) {
+        this.finalPipeline = finalPipeline;
+    }
+
+    public void setExplicit(final boolean explicit) {
+        this.explicit = explicit;
+    }
+
+    public void setResponseHeaders(final Map<String, String> responseHeaders) {
+        this.responseHeaders = responseHeaders;
     }
 }
