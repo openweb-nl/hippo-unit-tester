@@ -95,6 +95,15 @@ public abstract class BaseHippoTest extends AbstractRepoTest {
         return importer;
     }
 
+    protected void importResources(String path, String intermediateNodeType, String... pathsToResources) {
+        if (pathsToResources != null) {
+            for (String resource : pathsToResources) {
+                String format = getFileFormatByPath(resource);
+                getImporter(format).createNodes(getResourceAsStream(resource), path, intermediateNodeType);
+            }
+        }
+    }
+
     @Override
     public void teardown() {
         super.teardown();
