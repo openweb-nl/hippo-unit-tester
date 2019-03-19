@@ -1,4 +1,6 @@
 # Hippo Unit Tester
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopenweb-nl%2Fhippo-unit-tester.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopenweb-nl%2Fhippo-unit-tester?ref=badge_shield)
+
 
 Hippo Unit Tester is a framework that tries to take advantage of JCR mocking solutions and Hippo Mock objects to setup a mock Hippo API.
 It tries to be as realistic as possible while still be highly manipulatable.
@@ -107,3 +109,6 @@ importer.createNodesFromXml(getResourceAsStream("/nl/openweb/hippo/demo/news.xml
 ### Demo
 
 One of the best ways to learn about how to use this library is by looking at an [example](https://github.com/openweb-nl/hippo-unit-tester/blob/master/src/test/java/nl/openweb/hippo/demo/EssentialsListComponentTest.java)
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopenweb-nl%2Fhippo-unit-tester.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopenweb-nl%2Fhippo-unit-tester?ref=badge_large)
