@@ -70,7 +70,7 @@ public class SimpleHippoTest {
         }
     };
 
-    static {
+    public SimpleHippoTest() {
         HstServices.setComponentManager(delegatingComponentManager);
     }
 
