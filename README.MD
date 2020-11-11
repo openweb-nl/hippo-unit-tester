@@ -9,6 +9,7 @@ In order to enable developers to focus on designing their unit tests scenarios i
 1. Add dependency to pom.xml
 ```xml
 <dependencyManagement>
+  <dependencies>
     <dependency>
         <groupId>nl.openweb.hippo</groupId>
         <artifactId>hippo-unit-tester</artifactId>
@@ -16,6 +17,7 @@ In order to enable developers to focus on designing their unit tests scenarios i
         <scope>test</scope>
     </dependency>
     ...
+  </dependencies>
 </dependencyManagement>
 ```
 
